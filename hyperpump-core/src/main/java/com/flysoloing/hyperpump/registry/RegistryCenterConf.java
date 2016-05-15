@@ -18,10 +18,19 @@ public class RegistryCenterConf {
      */
     private String namespace;
 
+    /**
+     * 初始重试间隔时间
+     */
     private int baseSleepTimeMs;
 
+    /**
+     * 最大重试次数
+     */
     private int maxRetries;
 
+    /**
+     * 最大重试间隔时间
+     */
     private int maxSleepMs;
 
     /**
