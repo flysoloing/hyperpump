@@ -1,4 +1,6 @@
-package com.flysoloing.hyperpump.node.task;
+package com.flysoloing.hyperpump.task;
+
+import org.quartz.Job;
 
 /**
  * @author laitao
@@ -8,16 +10,17 @@ public class TaskConf {
 
     private String taskName;
 
-    private Class taskClass;
+    private Class<? extends Job> taskClass;
 
     private String cron;
 
     private String description;
 
-    public TaskConf(String taskName, Class taskClass, String cron) {
+    public TaskConf(String taskName, Class<? extends Job> taskClass, String cron, String description) {
         this.taskName = taskName;
         this.taskClass = taskClass;
         this.cron = cron;
+        this.description = description;
     }
 
     public String getTaskName() {
@@ -28,11 +31,11 @@ public class TaskConf {
         this.taskName = taskName;
     }
 
-    public Class getTaskClass() {
+    public Class<? extends Job> getTaskClass() {
         return taskClass;
     }
 
-    public void setTaskClass(Class taskClass) {
+    public void setTaskClass(Class<? extends Job> taskClass) {
         this.taskClass = taskClass;
     }
 

@@ -1,4 +1,4 @@
-package com.flysoloing.hyperpump.node.task;
+package com.flysoloing.hyperpump.task;
 
 /**
  * @author laitao
