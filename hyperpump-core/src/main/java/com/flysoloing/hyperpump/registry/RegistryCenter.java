@@ -141,8 +141,7 @@ public class RegistryCenter {
 
     public List<String> getChildrenPaths(String nodePath) {
         try {
-            List<String> result = curatorFramework.getChildren().forPath(nodePath);
-            return result;
+            return curatorFramework.getChildren().forPath(nodePath);
         } catch (Exception e) {
             HPExceptionHandler.handleException(e);
             return Collections.emptyList();

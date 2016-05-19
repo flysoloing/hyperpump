@@ -36,11 +36,11 @@ public class RegistryCenterConf {
     /**
      * 构造器
      *
-     * @param connectString
-     * @param namespace
-     * @param baseSleepTimeMs
-     * @param maxRetries
-     * @param maxSleepMs
+     * @param connectString 注册中心集群连接字符串
+     * @param namespace 命名空间
+     * @param baseSleepTimeMs 初始重试间隔时间
+     * @param maxRetries 最大重试次数
+     * @param maxSleepMs 最大重试间隔时间
      */
     public RegistryCenterConf(String connectString, String namespace, int baseSleepTimeMs, int maxRetries, int maxSleepMs) {
         this.connectString = connectString;

@@ -16,10 +16,14 @@ public class TaskConf {
 
     private String description;
 
-    public TaskConf(String taskName, Class<? extends Job> taskClass, String cron, String description) {
+    public TaskConf(String taskName, Class<? extends Job> taskClass, String cron) {
         this.taskName = taskName;
         this.taskClass = taskClass;
         this.cron = cron;
+    }
+
+    public TaskConf(String taskName, Class<? extends Job> taskClass, String cron, String description) {
+        this(taskName, taskClass, cron);
         this.description = description;
     }
 
