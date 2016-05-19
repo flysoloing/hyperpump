@@ -18,6 +18,7 @@ public class TaskScheduler {
 
     public TaskScheduler(TaskConf taskConf) {
         this.taskConf = taskConf;
+        //TODO 把TaskClass换成内置的Task，其作用是修改TaskNode节点的status状态并为batchNo加一操作
         this.jobDetail = JobBuilder.newJob(taskConf.getTaskClass()).withIdentity(taskConf.getTaskName()).build();
     }
 
