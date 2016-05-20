@@ -16,4 +16,8 @@ public class HPNodeUtils {
     public static String getFullPath(String rootNodeName, String targetNodeName) {
         return String.format("/%s/%s", rootNodeName, targetNodeName);
     }
+
+    public static String getFullPath(String nodeName) {
+        return String.format("/%s", nodeName);
+    }
 }

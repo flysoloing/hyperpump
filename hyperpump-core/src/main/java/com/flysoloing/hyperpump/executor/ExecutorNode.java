@@ -19,4 +19,23 @@ public class ExecutorNode {
 //        |---
 //        |---
 
+    private ExecutorConf executorConf;
+
+    private String rootNodePath;
+
+    private String ipNodePath;
+
+    private String portNodePath;
+
+    private String objNameNodePath;
+
+    private String taskListNodePath;
+
+    private String descriptionNodePath;
+
+    private String statusNodePath = "status";
+
+    public ExecutorNode(ExecutorConf executorConf) {
+        this.executorConf = executorConf;
+    }
 }

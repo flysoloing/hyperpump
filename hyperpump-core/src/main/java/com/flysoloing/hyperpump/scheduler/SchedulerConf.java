@@ -10,9 +10,9 @@ public class SchedulerConf {
 
     private int port;
 
-    private String objId;
+    private String objName;
 
-    private String status;
+    private String description;
 
     public String getIp() {
         return ip;
@@ -30,19 +30,19 @@ public class SchedulerConf {
         this.port = port;
     }
 
-    public String getObjId() {
-        return objId;
+    public String getObjName() {
+        return objName;
     }
 
-    public void setObjId(String objId) {
-        this.objId = objId;
+    public void setObjName(String objName) {
+        this.objName = objName;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
