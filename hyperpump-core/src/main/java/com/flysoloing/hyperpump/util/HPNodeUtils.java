@@ -7,17 +7,48 @@ package com.flysoloing.hyperpump.util;
 public class HPNodeUtils {
 
     /**
-     * 获取目标节点全路径
+     * 获取节点路径
      *
-     * @param rootNodeName 根节点名称
-     * @param targetNodeName 目标节点名称
-     * @return 目标节点全路径
+     * @param firstNodeName 第一级节点名称
+     * @return 节点路径
      */
-    public static String getFullPath(String rootNodeName, String targetNodeName) {
-        return String.format("/%s/%s", rootNodeName, targetNodeName);
+    public static String getPath(String firstNodeName) {
+        return String.format("/%s", firstNodeName);
     }
 
-    public static String getFullPath(String nodeName) {
-        return String.format("/%s", nodeName);
+    /**
+     * 获取节点路径
+     *
+     * @param firstNodeName 第一级节点名称
+     * @param secondNodeName 第二级节点名称
+     * @return 节点路径
+     */
+    public static String getPath(String firstNodeName, String secondNodeName) {
+        return String.format("/%s/%s", firstNodeName, secondNodeName);
+    }
+
+    /**
+     * 获取节点路径
+     *
+     * @param firstNodeName 第一级节点名称
+     * @param secondNodeName 第二级节点名称
+     * @param thirdNodeName 第三级节点名称
+     * @return 节点路径
+     */
+    public static String getPath(String firstNodeName, String secondNodeName, String thirdNodeName) {
+        return String.format("/%s/%s/%s", firstNodeName, secondNodeName, thirdNodeName);
+    }
+
+    /**
+     * 获取节点路径
+     *
+     * @param firstNodeName 第一级节点名称
+     * @param secondNodeName 第二级节点名称
+     * @param thirdNodeName 第三级节点名称
+     * @param fourthNodeName 第四级节点名称
+     * @return 节点路径
+     */
+    public static String getPath(String firstNodeName, String secondNodeName, String thirdNodeName, String fourthNodeName) {
+        return String.format("/%s/%s/%s/%s", firstNodeName, secondNodeName, thirdNodeName, fourthNodeName);
     }
 }

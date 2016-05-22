@@ -1,6 +1,8 @@
 package com.flysoloing.hyperpump.task;
 
 import com.flysoloing.hyperpump.exception.HPExceptionHandler;
+import com.flysoloing.hyperpump.internal.InternalTask;
+import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -10,19 +12,28 @@ import org.quartz.impl.StdSchedulerFactory;
  */
 public class TaskScheduler {
 
+    private RegistryCenter registryCenter;
+
     private TaskConf taskConf;
+
+//    private TaskNode taskNode;
 
     private JobDetail jobDetail;
 
     private Scheduler scheduler;
 
-    public TaskScheduler(TaskConf taskConf) {
+    public TaskScheduler(RegistryCenter registryCenter, TaskConf taskConf) {
+        this.registryCenter = registryCenter;
         this.taskConf = taskConf;
+//        this.taskNode = new TaskNode(taskConf);
         //TODO 把TaskClass换成内置的Task，其作用是修改TaskNode节点的status状态并为batchNo加一操作
-        this.jobDetail = JobBuilder.newJob(taskConf.getTaskClass()).withIdentity(taskConf.getTaskName()).build();
+        //this.jobDetail = JobBuilder.newJob(taskConf.getTaskClass()).withIdentity(taskConf.getTaskName()).build();
+        this.jobDetail = JobBuilder.newJob(InternalTask.class).withIdentity(taskConf.getTaskName()).build();
     }
 
     public void init() {
+        jobDetail.getJobDataMap().put("registryCenter", registryCenter);
+        jobDetail.getJobDataMap().put("taskConf", taskConf);
         try {
             scheduler = initializeScheduler(taskConf);
             scheduleJob(buildCronTrigger(taskConf));

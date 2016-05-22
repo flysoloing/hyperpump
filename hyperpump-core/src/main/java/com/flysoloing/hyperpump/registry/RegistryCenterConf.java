@@ -21,17 +21,27 @@ public class RegistryCenterConf {
     /**
      * 初始重试间隔时间
      */
-    private int baseSleepTimeMs;
+    private int baseSleepTimeMs = 1000;
 
     /**
      * 最大重试次数
      */
-    private int maxRetries;
+    private int maxRetries = 3;
 
     /**
      * 最大重试间隔时间
      */
-    private int maxSleepMs;
+    private int maxSleepMs = 3000;
+
+    /**
+     * 连接超时时间
+     */
+    private int connectionTimeoutMs = 3000;
+
+    /**
+     * 会话超时时间
+     */
+    private int sessionTimeoutMs = 30 * 60 * 1000;
 
     /**
      * 构造器
@@ -48,6 +58,23 @@ public class RegistryCenterConf {
         this.baseSleepTimeMs = baseSleepTimeMs;
         this.maxRetries = maxRetries;
         this.maxSleepMs = maxSleepMs;
+    }
+
+    /**
+     * 构造器
+     *
+     * @param connectString 注册中心集群连接字符串
+     * @param namespace 命名空间
+     * @param baseSleepTimeMs 初始重试间隔时间
+     * @param maxRetries 最大重试次数
+     * @param maxSleepMs 最大重试间隔时间
+     * @param connectionTimeoutMs 连接超时时间
+     * @param sessionTimeoutMs 会话超时时间
+     */
+    public RegistryCenterConf(String connectString, String namespace, int baseSleepTimeMs, int maxRetries, int maxSleepMs, int connectionTimeoutMs, int sessionTimeoutMs) {
+        this(connectString, namespace, baseSleepTimeMs, maxRetries, maxSleepMs);
+        this.connectionTimeoutMs = connectionTimeoutMs;
+        this.sessionTimeoutMs = sessionTimeoutMs;
     }
 
     public String getConnectString() {
@@ -88,5 +115,21 @@ public class RegistryCenterConf {
 
     public void setMaxSleepMs(int maxSleepMs) {
         this.maxSleepMs = maxSleepMs;
+    }
+
+    public int getConnectionTimeoutMs() {
+        return connectionTimeoutMs;
+    }
+
+    public void setConnectionTimeoutMs(int connectionTimeoutMs) {
+        this.connectionTimeoutMs = connectionTimeoutMs;
+    }
+
+    public int getSessionTimeoutMs() {
+        return sessionTimeoutMs;
+    }
+
+    public void setSessionTimeoutMs(int sessionTimeoutMs) {
+        this.sessionTimeoutMs = sessionTimeoutMs;
     }
 }

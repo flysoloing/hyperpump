@@ -1,4 +1,4 @@
-package com.flysoloing.hyperpump.node;
+package com.flysoloing.hyperpump.base;
 
 /**
  * @author laitao

@@ -1,6 +1,6 @@
 package com.flysoloing.hyperpump.scheduler;
 
-import com.flysoloing.hyperpump.node.NodeService;
+import com.flysoloing.hyperpump.base.NodeService;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 
 /**
@@ -21,7 +21,6 @@ public class SchedulerNodeService implements NodeService {
         this.schedulerNode = new SchedulerNode(schedulerConf);
     }
 
-    @Override
     public void registerNodeInfo() {
         //TODO
     }

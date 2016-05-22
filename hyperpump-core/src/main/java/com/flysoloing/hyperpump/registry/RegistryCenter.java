@@ -40,6 +40,8 @@ public class RegistryCenter {
     public void init() {
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
                 .connectString(registryCenterConf.getConnectString())
+                .connectionTimeoutMs(registryCenterConf.getConnectionTimeoutMs())
+                .sessionTimeoutMs(registryCenterConf.getSessionTimeoutMs())
                 .retryPolicy(new ExponentialBackoffRetry(registryCenterConf.getBaseSleepTimeMs(), registryCenterConf.getMaxRetries(), registryCenterConf.getMaxSleepMs()))
                 .namespace(registryCenterConf.getNamespace());
         curatorFramework = builder.build();

@@ -20,52 +20,49 @@ public class TaskNode {
 //        |---
 //        |---
 
-    private String rootNodePath;
+    private String rootNodeName;
 
-    private String taskClassNodePath;
+    private String taskClassNodeName = "taskClass";
 
-    private String cronNodePath;
+    private String taskTypeNodeName = "taskType";
 
-    private String descriptionNodePath;
+    private String cronNodeName = "cron";
 
-    private String taskTypeNodePath = "taskType";
+    private String descriptionNodeName = "description";
 
-    private String batchNoNodePath = "batchNo";
+    private String batchNoNodeName = "batchNo";
 
-    private String statusNodePath = "status";
+    private String statusNodeName = "status";
 
     public TaskNode(TaskConf taskConf) {
-        this.rootNodePath = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_TASK, taskConf.getTaskName());
-        this.taskClassNodePath = taskConf.getTaskClass().getCanonicalName();
-        this.cronNodePath = taskConf.getCron();
-        this.descriptionNodePath = taskConf.getDescription();
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_TASK, taskConf.getTaskName());
     }
 
     public String getRootNodePath() {
-        return HPNodeUtils.getFullPath(rootNodePath);
+        return HPNodeUtils.getPath(rootNodeName);
     }
 
     public String getTaskClassNodePath() {
-        return HPNodeUtils.getFullPath(rootNodePath, taskClassNodePath);
-    }
-
-    public String getCronNodePath() {
-        return HPNodeUtils.getFullPath(rootNodePath, cronNodePath);
-    }
-
-    public String getDescriptionNodePath() {
-        return HPNodeUtils.getFullPath(rootNodePath, descriptionNodePath);
+        return HPNodeUtils.getPath(rootNodeName, taskClassNodeName);
     }
 
     public String getTaskTypeNodePath() {
-        return HPNodeUtils.getFullPath(rootNodePath, taskTypeNodePath);
+        return HPNodeUtils.getPath(rootNodeName, taskTypeNodeName);
+    }
+
+    public String getCronNodePath() {
+        return HPNodeUtils.getPath(rootNodeName, cronNodeName);
+    }
+
+    public String getDescriptionNodePath() {
+        return HPNodeUtils.getPath(rootNodeName, descriptionNodeName);
     }
 
     public String getBatchNoNodePath() {
-        return HPNodeUtils.getFullPath(rootNodePath, batchNoNodePath);
+        return HPNodeUtils.getPath(rootNodeName, batchNoNodeName);
     }
 
     public String getStatusNodePath() {
-        return HPNodeUtils.getFullPath(rootNodePath, statusNodePath);
+        return HPNodeUtils.getPath(rootNodeName, statusNodeName);
     }
 }

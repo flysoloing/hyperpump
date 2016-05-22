@@ -1,6 +1,6 @@
 package com.flysoloing.hyperpump.executor;
 
-import com.flysoloing.hyperpump.node.NodeService;
+import com.flysoloing.hyperpump.base.NodeService;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 
 /**
@@ -21,7 +21,6 @@ public class ExecutorNodeService implements NodeService {
         this.executorNode = new ExecutorNode(executorConf);
     }
 
-    @Override
     public void registerNodeInfo() {
         //TODO
     }

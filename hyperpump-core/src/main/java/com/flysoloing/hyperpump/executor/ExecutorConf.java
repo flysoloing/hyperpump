@@ -14,6 +14,17 @@ public class ExecutorConf {
 
     private String status;
 
+    public ExecutorConf(String ip, int port, String objId) {
+        this.ip = ip;
+        this.port = port;
+        this.objId = objId;
+    }
+
+    public ExecutorConf(String ip, int port, String objId, String status) {
+        this(ip, port, objId);
+        this.status = status;
+    }
+
     public String getIp() {
         return ip;
     }
