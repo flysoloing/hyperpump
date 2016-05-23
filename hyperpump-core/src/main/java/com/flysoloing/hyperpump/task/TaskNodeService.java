@@ -1,6 +1,7 @@
 package com.flysoloing.hyperpump.task;
 
 import com.flysoloing.hyperpump.base.NodeService;
+import com.flysoloing.hyperpump.common.Status;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 
 /**
@@ -28,7 +29,7 @@ public class TaskNodeService implements NodeService {
             registryCenter.persist(taskNode.getDescriptionNodePath(), taskConf.getDescription());
             registryCenter.persist(taskNode.getTaskTypeNodePath(), "");
             registryCenter.persist(taskNode.getBatchNoNodePath(), "0000000001");  //格式化，如：0000000000000000001
-            registryCenter.persist(taskNode.getStatusNodePath(), "");
+            registryCenter.persist(taskNode.getStatusNodePath(), Status.READY.getStatus());
         }
     }
 }

@@ -17,7 +17,7 @@ public class App {
 
     private RegistryCenter registryCenter = new RegistryCenter(registryCenterConf);
 
-    private TaskConf taskConf = new TaskConf("hptasktest", AbstractBaseTask.class, "0/2 * * * * ?");
+    private TaskConf taskConf = new TaskConf("hptasktest", AbstractBaseTask.class, "0/5 * * * * ?");
 
     public static void main( String[] args ) {
         new App().init();
