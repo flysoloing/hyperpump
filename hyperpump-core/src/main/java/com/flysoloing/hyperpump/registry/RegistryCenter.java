@@ -149,4 +149,20 @@ public class RegistryCenter {
             return Collections.emptyList();
         }
     }
+
+    public RegistryCenterConf getRegistryCenterConf() {
+        return registryCenterConf;
+    }
+
+    public void setRegistryCenterConf(RegistryCenterConf registryCenterConf) {
+        this.registryCenterConf = registryCenterConf;
+    }
+
+    public CuratorFramework getCuratorFramework() {
+        return curatorFramework;
+    }
+
+    public void setCuratorFramework(CuratorFramework curatorFramework) {
+        this.curatorFramework = curatorFramework;
+    }
 }

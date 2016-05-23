@@ -10,19 +10,19 @@ public class ExecutorConf {
 
     private int port;
 
-    private String objId;
+    private String objName;
 
-    private String status;
+    private String description;
 
-    public ExecutorConf(String ip, int port, String objId) {
+    public ExecutorConf(String ip, int port, String objName) {
         this.ip = ip;
         this.port = port;
-        this.objId = objId;
+        this.objName = objName;
     }
 
-    public ExecutorConf(String ip, int port, String objId, String status) {
-        this(ip, port, objId);
-        this.status = status;
+    public ExecutorConf(String ip, int port, String objName, String description) {
+        this(ip, port, objName);
+        this.description = description;
     }
 
     public String getIp() {
@@ -41,19 +41,19 @@ public class ExecutorConf {
         this.port = port;
     }
 
-    public String getObjId() {
-        return objId;
+    public String getObjName() {
+        return objName;
     }
 
-    public void setObjId(String objId) {
-        this.objId = objId;
+    public void setObjName(String objName) {
+        this.objName = objName;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

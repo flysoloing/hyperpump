@@ -22,6 +22,8 @@ public class SchedulerNodeService implements NodeService {
     }
 
     public void registerNodeInfo() {
-        //TODO
+        if (!registryCenter.isExisted(schedulerNode.getRootNodePath())) {
+            //TODO
+        }
     }
 }

@@ -8,6 +8,13 @@ package com.flysoloing.hyperpump.registry;
  */
 public class RegistryCenterConf {
 
+    /*缺省默认值*/
+    private static final int DEFAULT_BASE_SLEEP_TIME_MS = 1000;
+    private static final int DEFAULT_MAX_RETRIES = 3;
+    private static final int DEFAULT_MAX_SLEEP_MS = 3 * 1000;
+    private static final int DEFAULT_CONNECTION_TIMEOUT_MS = 3 * 1000;
+    private static final int DEFAULT_SESSION_TIMEOUT_MS = 30 * 60 * 1000;
+
     /**
      * 注册中心集群连接字符串，如：host1:port,host2:port
      */
@@ -21,27 +28,27 @@ public class RegistryCenterConf {
     /**
      * 初始重试间隔时间
      */
-    private int baseSleepTimeMs = 1000;
+    private int baseSleepTimeMs = DEFAULT_BASE_SLEEP_TIME_MS;
 
     /**
      * 最大重试次数
      */
-    private int maxRetries = 3;
+    private int maxRetries = DEFAULT_MAX_RETRIES;
 
     /**
      * 最大重试间隔时间
      */
-    private int maxSleepMs = 3000;
+    private int maxSleepMs = DEFAULT_MAX_SLEEP_MS;
 
     /**
      * 连接超时时间
      */
-    private int connectionTimeoutMs = 3000;
+    private int connectionTimeoutMs = DEFAULT_CONNECTION_TIMEOUT_MS;
 
     /**
      * 会话超时时间
      */
-    private int sessionTimeoutMs = 30 * 60 * 1000;
+    private int sessionTimeoutMs = DEFAULT_SESSION_TIMEOUT_MS;
 
     /**
      * 构造器

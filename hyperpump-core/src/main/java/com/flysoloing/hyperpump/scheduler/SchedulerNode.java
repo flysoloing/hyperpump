@@ -10,10 +10,11 @@ import com.google.common.base.Joiner;
  */
 public class SchedulerNode {
 
-//    /SCHEDULER_${IP:PORT:OBJ_NAME}
+//    /SCHEDULER_IP_PORT_OBJNAME
 //        |---ip：ip地址
 //        |---port：端口号
 //        |---objName：对象名
+//        |---description：描述
 //        |---taskList
 //        |---|---taskName
 //        |---|---|---taskClass：任务类
@@ -27,7 +28,6 @@ public class SchedulerNode {
 //        |---|---|---taskClass：任务类
 //        |---|---|---batchNo：任务批次号
 //        |---|---|---taskStatus：状态
-//        |---description：描述
 //        |---status：状态，有效/无效
 //        |---
 //        |---
@@ -55,7 +55,7 @@ public class SchedulerNode {
     private String statusNodeName = "status";
 
     public SchedulerNode(SchedulerConf schedulerConf) {
-        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerConf.getIp(), schedulerConf.getPort(), schedulerConf.getObjName());
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerConf.getIp(), String.valueOf(schedulerConf.getPort()), schedulerConf.getObjName());
     }
 
     public String getRootNodePath() {

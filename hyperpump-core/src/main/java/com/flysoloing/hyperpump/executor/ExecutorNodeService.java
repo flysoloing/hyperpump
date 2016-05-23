@@ -22,6 +22,8 @@ public class ExecutorNodeService implements NodeService {
     }
 
     public void registerNodeInfo() {
-        //TODO
+        if (!registryCenter.isExisted(executorNode.getRootNodePath())) {
+            //TODO
+        }
     }
 }
