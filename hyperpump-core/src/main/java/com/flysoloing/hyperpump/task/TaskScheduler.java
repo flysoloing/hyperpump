@@ -16,7 +16,7 @@ public class TaskScheduler {
 
     private TaskConf taskConf;
 
-//    private TaskNode taskNode;
+    private TaskNode taskNode;
 
     private JobDetail jobDetail;
 
@@ -25,7 +25,7 @@ public class TaskScheduler {
     public TaskScheduler(RegistryCenter registryCenter, TaskConf taskConf) {
         this.registryCenter = registryCenter;
         this.taskConf = taskConf;
-//        this.taskNode = new TaskNode(taskConf);
+        this.taskNode = new TaskNode(taskConf);
         //TODO 把TaskClass换成内置的Task，其作用是修改TaskNode节点的status状态并为batchNo加一操作
         //this.jobDetail = JobBuilder.newJob(taskConf.getTaskClass()).withIdentity(taskConf.getTaskName()).build();
         this.jobDetail = JobBuilder.newJob(InternalTask.class).withIdentity(taskConf.getTaskName()).build();
@@ -33,7 +33,7 @@ public class TaskScheduler {
 
     public void init() {
         jobDetail.getJobDataMap().put("registryCenter", registryCenter);
-        jobDetail.getJobDataMap().put("taskConf", taskConf);
+        jobDetail.getJobDataMap().put("taskNode", taskNode);
         try {
             scheduler = initializeScheduler(taskConf);
             scheduleJob(buildCronTrigger(taskConf));
