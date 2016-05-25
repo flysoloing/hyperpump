@@ -46,8 +46,8 @@ public class ExecutorNode {
 
     private String statusNodeName = "status";
 
-    public ExecutorNode(ExecutorConf executorConf) {
-        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_EXECUTOR, executorConf.getIp(), String.valueOf(executorConf.getPort()), executorConf.getObjName());
+    public ExecutorNode(ExecutorNodeConf executorNodeConf) {
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_EXECUTOR, executorNodeConf.getIp(), String.valueOf(executorNodeConf.getPort()), executorNodeConf.getObjName());
     }
 
     public String getRootNodePath() {

@@ -54,8 +54,8 @@ public class SchedulerNode {
 
     private String statusNodeName = "status";
 
-    public SchedulerNode(SchedulerConf schedulerConf) {
-        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerConf.getIp(), String.valueOf(schedulerConf.getPort()), schedulerConf.getObjName());
+    public SchedulerNode(SchedulerNodeConf schedulerNodeConf) {
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerNodeConf.getIp(), String.valueOf(schedulerNodeConf.getPort()), schedulerNodeConf.getObjName());
     }
 
     public String getRootNodePath() {

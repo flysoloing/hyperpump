@@ -34,8 +34,8 @@ public class TaskNode {
 
     private String statusNodeName = "status";
 
-    public TaskNode(TaskConf taskConf) {
-        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_TASK, taskConf.getTaskName());
+    public TaskNode(TaskNodeConf taskNodeConf) {
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_TASK, taskNodeConf.getTaskName());
     }
 
     public String getRootNodePath() {

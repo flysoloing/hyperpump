@@ -6,7 +6,7 @@ import org.quartz.Job;
  * @author laitao
  * @since 2016-05-15 16:34:34
  */
-public class TaskConf {
+public class TaskNodeConf {
 
     private String taskName;
 
@@ -16,13 +16,13 @@ public class TaskConf {
 
     private String description;
 
-    public TaskConf(String taskName, Class<? extends Job> taskClass, String cron) {
+    public TaskNodeConf(String taskName, Class<? extends Job> taskClass, String cron) {
         this.taskName = taskName;
         this.taskClass = taskClass;
         this.cron = cron;
     }
 
-    public TaskConf(String taskName, Class<? extends Job> taskClass, String cron, String description) {
+    public TaskNodeConf(String taskName, Class<? extends Job> taskClass, String cron, String description) {
         this(taskName, taskClass, cron);
         this.description = description;
     }

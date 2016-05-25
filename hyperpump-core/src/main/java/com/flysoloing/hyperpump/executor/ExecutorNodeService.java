@@ -11,19 +11,29 @@ public class ExecutorNodeService implements NodeService {
 
     private RegistryCenter registryCenter;
 
-    private ExecutorConf executorConf;
+    private ExecutorNodeConf executorNodeConf;
 
     private ExecutorNode executorNode;
 
-    public ExecutorNodeService(RegistryCenter registryCenter, ExecutorConf executorConf) {
+    public ExecutorNodeService(RegistryCenter registryCenter, ExecutorNodeConf executorNodeConf) {
         this.registryCenter = registryCenter;
-        this.executorConf = executorConf;
-        this.executorNode = new ExecutorNode(executorConf);
+        this.executorNodeConf = executorNodeConf;
+        this.executorNode = new ExecutorNode(executorNodeConf);
+    }
+
+    public void init() {
+        registryCenter.addTreeCache(executorNode.getRootNodePath());
+        registerNodeInfo();
+        registerNodeListener();
     }
 
     public void registerNodeInfo() {
         if (!registryCenter.isExisted(executorNode.getRootNodePath())) {
             //TODO
         }
+    }
+
+    public void registerNodeListener() {
+
     }
 }

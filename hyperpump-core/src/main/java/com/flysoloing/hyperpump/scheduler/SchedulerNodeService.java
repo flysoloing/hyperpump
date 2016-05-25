@@ -11,19 +11,29 @@ public class SchedulerNodeService implements NodeService {
 
     private RegistryCenter registryCenter;
 
-    private SchedulerConf schedulerConf;
+    private SchedulerNodeConf schedulerNodeConf;
 
     private SchedulerNode schedulerNode;
 
-    public SchedulerNodeService(RegistryCenter registryCenter, SchedulerConf schedulerConf) {
+    public SchedulerNodeService(RegistryCenter registryCenter, SchedulerNodeConf schedulerNodeConf) {
         this.registryCenter = registryCenter;
-        this.schedulerConf = schedulerConf;
-        this.schedulerNode = new SchedulerNode(schedulerConf);
+        this.schedulerNodeConf = schedulerNodeConf;
+        this.schedulerNode = new SchedulerNode(schedulerNodeConf);
+    }
+
+    public void init() {
+        registryCenter.addTreeCache(schedulerNode.getRootNodePath());
+        registerNodeInfo();
+        registerNodeListener();
     }
 
     public void registerNodeInfo() {
         if (!registryCenter.isExisted(schedulerNode.getRootNodePath())) {
             //TODO
         }
+    }
+
+    public void registerNodeListener() {
+
     }
 }

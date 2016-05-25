@@ -10,11 +10,11 @@ import org.quartz.impl.StdSchedulerFactory;
  * @author laitao
  * @since 2016-05-19 00:19:44
  */
-public class TaskScheduler {
+public class TaskNodeScheduler {
 
     private RegistryCenter registryCenter;
 
-    private TaskConf taskConf;
+    private TaskNodeConf taskNodeConf;
 
     private TaskNode taskNode;
 
@@ -22,38 +22,38 @@ public class TaskScheduler {
 
     private Scheduler scheduler;
 
-    public TaskScheduler(RegistryCenter registryCenter, TaskConf taskConf) {
+    public TaskNodeScheduler(RegistryCenter registryCenter, TaskNodeConf taskNodeConf) {
         this.registryCenter = registryCenter;
-        this.taskConf = taskConf;
-        this.taskNode = new TaskNode(taskConf);
+        this.taskNodeConf = taskNodeConf;
+        this.taskNode = new TaskNode(taskNodeConf);
         //TODO 把TaskClass换成内置的Task，其作用是修改TaskNode节点的status状态并为batchNo加一操作
-        //this.jobDetail = JobBuilder.newJob(taskConf.getTaskClass()).withIdentity(taskConf.getTaskName()).build();
-        this.jobDetail = JobBuilder.newJob(InternalTask.class).withIdentity(taskConf.getTaskName()).build();
+        //this.jobDetail = JobBuilder.newJob(taskNodeConf.getTaskClass()).withIdentity(taskNodeConf.getTaskName()).build();
+        this.jobDetail = JobBuilder.newJob(InternalTask.class).withIdentity(taskNodeConf.getTaskName()).build();
     }
 
     public void init() {
         jobDetail.getJobDataMap().put("registryCenter", registryCenter);
         jobDetail.getJobDataMap().put("taskNode", taskNode);
         try {
-            scheduler = initializeScheduler(taskConf);
-            scheduleJob(buildCronTrigger(taskConf));
+            scheduler = initializeScheduler(taskNodeConf);
+            scheduleJob(buildCronTrigger(taskNodeConf));
         } catch (SchedulerException e) {
             HPExceptionHandler.handleException(e);
         }
     }
 
-    private Scheduler initializeScheduler(TaskConf taskConf) throws SchedulerException {
+    private Scheduler initializeScheduler(TaskNodeConf taskNodeConf) throws SchedulerException {
         StdSchedulerFactory schedulerFactory = new StdSchedulerFactory();
         Scheduler scheduler = schedulerFactory.getScheduler();
         scheduler.getListenerManager().addTriggerListener(new TaskTriggerListener());
         return scheduler;
     }
 
-    private CronTrigger buildCronTrigger(TaskConf taskConf) {
-        CronScheduleBuilder cronSchedule = CronScheduleBuilder.cronSchedule(taskConf.getCron());
+    private CronTrigger buildCronTrigger(TaskNodeConf taskNodeConf) {
+        CronScheduleBuilder cronSchedule = CronScheduleBuilder.cronSchedule(taskNodeConf.getCron());
         return TriggerBuilder
                 .newTrigger()
-                .withIdentity(taskConf.getTaskName())
+                .withIdentity(taskNodeConf.getTaskName())
                 .withSchedule(cronSchedule)
                 .build();
     }

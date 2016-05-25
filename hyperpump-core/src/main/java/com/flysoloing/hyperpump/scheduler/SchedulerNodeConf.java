@@ -1,10 +1,10 @@
-package com.flysoloing.hyperpump.executor;
+package com.flysoloing.hyperpump.scheduler;
 
 /**
  * @author laitao
- * @since 2016-05-19 01:10:33
+ * @since 2016-05-19 01:10:43
  */
-public class ExecutorConf {
+public class SchedulerNodeConf {
 
     private String ip;
 
@@ -14,13 +14,13 @@ public class ExecutorConf {
 
     private String description;
 
-    public ExecutorConf(String ip, int port, String objName) {
+    public SchedulerNodeConf(String ip, int port, String objName) {
         this.ip = ip;
         this.port = port;
         this.objName = objName;
     }
 
-    public ExecutorConf(String ip, int port, String objName, String description) {
+    public SchedulerNodeConf(String ip, int port, String objName, String description) {
         this(ip, port, objName);
         this.description = description;
     }

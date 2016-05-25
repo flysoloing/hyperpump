@@ -1,9 +1,9 @@
 package com.flysoloing.hyperpump;
 
 import com.flysoloing.hyperpump.base.AbstractBaseTask;
-import com.flysoloing.hyperpump.task.TaskConf;
+import com.flysoloing.hyperpump.task.TaskNodeConf;
+import com.flysoloing.hyperpump.task.TaskNodeScheduler;
 import com.flysoloing.hyperpump.task.TaskNodeService;
-import com.flysoloing.hyperpump.task.TaskScheduler;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import com.flysoloing.hyperpump.registry.RegistryCenterConf;
 
@@ -17,7 +17,7 @@ public class App {
 
     private RegistryCenter registryCenter = new RegistryCenter(registryCenterConf);
 
-    private TaskConf taskConf = new TaskConf("hptasktest", AbstractBaseTask.class, "0/5 * * * * ?");
+    private TaskNodeConf taskNodeConf = new TaskNodeConf("hptasktest", AbstractBaseTask.class, "0/5 * * * * ?");
 
     public static void main( String[] args ) {
         new App().init();
@@ -26,15 +26,10 @@ public class App {
     public void init() {
         //初始化注册中心
         registryCenter.init();
-        taskConf.setDescription("this is my first test");
+        taskNodeConf.setDescription("this is my first test");
 
-        new TaskNodeService(registryCenter, taskConf).registerNodeInfo();
-//        new TaskNodeService(registryCenter, taskConf).registerNodeInfo();
-//        new TaskNodeService(registryCenter, taskConf).registerNodeInfo();
-
-        new TaskScheduler(registryCenter, taskConf).init();
-//        new TaskScheduler(registryCenter, taskConf).init();
-//        new TaskScheduler(registryCenter, taskConf).init();
+        new TaskNodeService(registryCenter, taskNodeConf).init();
+        new TaskNodeScheduler(registryCenter, taskNodeConf).init();
 
         //注册任务节点
 //        String nodePath = "/taskSet/task1";

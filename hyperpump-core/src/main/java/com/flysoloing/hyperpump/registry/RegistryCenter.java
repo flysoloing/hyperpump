@@ -3,6 +3,8 @@ package com.flysoloing.hyperpump.registry;
 import com.flysoloing.hyperpump.exception.HPExceptionHandler;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.recipes.cache.ChildData;
+import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 import org.apache.zookeeper.CreateMode;
@@ -11,7 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 注册中心，基于zookeeper实现
@@ -28,6 +32,8 @@ public class RegistryCenter {
     private RegistryCenterConf registryCenterConf;
 
     private CuratorFramework curatorFramework;
+
+    private Map<String, TreeCache> treeCacheMap = new HashMap<String, TreeCache>();
 
     /**
      * 构造器
@@ -63,6 +69,7 @@ public class RegistryCenter {
      * 关闭注册中心
      */
     public void close() {
+        closeAllTreeCache();
         try {
             Thread.sleep(500L);
         } catch (InterruptedException e) {
@@ -72,18 +79,86 @@ public class RegistryCenter {
     }
 
     /**
-     * 获取节点内容
+     * 关闭TreeCache映射集合
+     */
+    public void closeAllTreeCache() {
+        for (Map.Entry<String, TreeCache> entry : treeCacheMap.entrySet()) {
+            entry.getValue().close();
+        }
+    }
+
+    /**
+     * 关闭单个TreeCache
+     *
+     * @param nodePath 节点路径
+     */
+    public void closeTreeCache(String nodePath) {
+        TreeCache treeCache = getTreeCache(nodePath);
+        if (treeCache != null)
+            treeCache.close();
+    }
+
+    /**
+     * 直接从ZK集群获取节点内容
      *
      * @param nodePath 节点路径
      * @return 节点内容，异常时返回null
      */
-    public String get(String nodePath) {
+    public String getDirectly(String nodePath) {
         try {
             return new String(curatorFramework.getData().forPath(nodePath), Charset.forName(CHARSET_NAME_UTF8));
         } catch (Exception e) {
             HPExceptionHandler.handleException(e);
             return null;
         }
+    }
+
+    /**
+     * 获取节点内容
+     *
+     * @param nodePath 节点路径
+     * @return 节点内容，异常时返回null
+     */
+    public String get(String nodePath) {
+        TreeCache treeCache = getTreeCache(nodePath);
+        if (null == treeCache) {
+            return getDirectly(nodePath);
+        }
+        ChildData childData = treeCache.getCurrentData(nodePath);
+        if (null != childData) {
+            return null == childData.getData() ? null : new String(childData.getData(), Charset.forName(CHARSET_NAME_UTF8));
+        }
+        return getDirectly(nodePath);
+    }
+
+    /**
+     * 获取单个TreeCache
+     *
+     * @param nodePath 节点路径
+     * @return TreeCache对象
+     */
+    public TreeCache getTreeCache(String nodePath) {
+        for (Map.Entry<String, TreeCache> entry : treeCacheMap.entrySet()) {
+            if (nodePath.startsWith(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 添加TreeCache到treeCacheMap中
+     *
+     * @param nodePath 节点路径
+     */
+    public void addTreeCache(String nodePath) {
+        TreeCache treeCache = new TreeCache(curatorFramework, nodePath);
+        try {
+            treeCache.start();
+        } catch (Exception e) {
+            HPExceptionHandler.handleException(e);
+        }
+        treeCacheMap.put(nodePath, treeCache);
     }
 
     /**
@@ -151,6 +226,12 @@ public class RegistryCenter {
         }
     }
 
+    /**
+     * 获取孩子节点列表
+     *
+     * @param nodePath 节点路径
+     * @return 孩子节点列表
+     */
     public List<String> getChildrenPaths(String nodePath) {
         try {
             return curatorFramework.getChildren().forPath(nodePath);
@@ -174,5 +255,13 @@ public class RegistryCenter {
 
     public void setCuratorFramework(CuratorFramework curatorFramework) {
         this.curatorFramework = curatorFramework;
+    }
+
+    public Map<String, TreeCache> getTreeCacheMap() {
+        return treeCacheMap;
+    }
+
+    public void setTreeCacheMap(Map<String, TreeCache> treeCacheMap) {
+        this.treeCacheMap = treeCacheMap;
     }
 }
