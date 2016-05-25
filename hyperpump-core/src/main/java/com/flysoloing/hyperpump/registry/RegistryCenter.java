@@ -6,6 +6,8 @@ import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 import org.apache.zookeeper.CreateMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.Collections;
@@ -18,6 +20,8 @@ import java.util.List;
  * @since 2016-05-13 01:05:25
  */
 public class RegistryCenter {
+
+    Logger logger = LoggerFactory.getLogger(RegistryCenter.class);
 
     public static final String CHARSET_NAME_UTF8 = "UTF-8";
 
@@ -38,6 +42,7 @@ public class RegistryCenter {
      * 初始化注册中心
      */
     public void init() {
+        logger.info("Hyper Pump Registry Center Initialize Start...");
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
                 .connectString(registryCenterConf.getConnectString())
                 .connectionTimeoutMs(registryCenterConf.getConnectionTimeoutMs())
@@ -104,7 +109,12 @@ public class RegistryCenter {
      */
     public void update(String nodePath, String value) {
         try {
-            curatorFramework.inTransaction().check().forPath(nodePath).and().setData().forPath(nodePath, value.getBytes(Charset.forName(CHARSET_NAME_UTF8))).and().commit();
+            curatorFramework.inTransaction()
+                    .check().forPath(nodePath)
+                    .and()
+                    .setData().forPath(nodePath, value.getBytes(Charset.forName(CHARSET_NAME_UTF8)))
+                    .and()
+                    .commit();
         } catch (Exception e) {
             HPExceptionHandler.handleException(e);
         }
