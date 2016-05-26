@@ -2,6 +2,7 @@ package com.flysoloing.hyperpump.scheduler;
 
 import com.flysoloing.hyperpump.base.NodeService;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
+import org.apache.curator.framework.recipes.cache.TreeCache;
 
 /**
  * @author laitao
@@ -34,6 +35,8 @@ public class SchedulerNodeService implements NodeService {
     }
 
     public void registerNodeListener() {
-
+        TreeCache treeCache = registryCenter.getTreeCache(schedulerNode.getRootNodePath());
+        if (treeCache != null)
+            treeCache.getListenable().addListener(new SchedulerNodeListener());
     }
 }

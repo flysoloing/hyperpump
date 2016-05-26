@@ -16,8 +16,8 @@ public class App
         //03、实现Scheduler节点增加taskList，分为待执行和执行中节点，已执行的需要清除
         //04、给hyperpump-core增加统一异常处理
         //05、写一个高位自动填充0的工具方法，如：“1”自动填充为“00000000000001”
-        //06、
-        //07、
+        //06、区分TaskStatus和NodeStatus状态枚举
+        //07、将PORT修改为PID，PID为JVM示例的PID，用以区分
         //08、
         //09、
         //10、
