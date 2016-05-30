@@ -24,6 +24,8 @@ public class ExecutorNode {
 //        |---
 //        |---
 
+    private String namespace = "EXECUTORS";
+
     private String rootNodeName;
 
     private String ipNodeName = "ip";
@@ -47,51 +49,51 @@ public class ExecutorNode {
     private String statusNodeName = "status";
 
     public ExecutorNode(ExecutorNodeConf executorNodeConf) {
-        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_EXECUTOR, executorNodeConf.getIp(), String.valueOf(executorNodeConf.getPid()), executorNodeConf.getObjName());
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_EXECUTOR, executorNodeConf.getIp(), executorNodeConf.getPid(), executorNodeConf.getObjName());
     }
 
     public String getRootNodePath() {
-        return HPNodeUtils.getPath(rootNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName);
     }
 
     public String getIpNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, ipNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, ipNodeName);
     }
 
-    public String getPortNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, pidNodeName);
+    public String getPidNodePath() {
+        return HPNodeUtils.getPath(namespace, rootNodeName, pidNodeName);
     }
 
     public String getObjNameNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, objNameNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, objNameNodeName);
     }
 
     public String getDescriptionNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, descriptionNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
     }
 
     public String getTaskNameNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, taskNameNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskNameNodeName);
     }
 
     public String getTaskClassNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, taskClassNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskClassNodeName);
     }
 
     public String getBatchNoNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, batchNoNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, batchNoNodeName);
     }
 
     public String getTaskStatusNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, taskStatusNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskStatusNodeName);
     }
 
     public String getOffsetNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, offsetNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, offsetNodeName);
     }
 
     public String getStatusNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, statusNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, statusNodeName);
     }
 
 }

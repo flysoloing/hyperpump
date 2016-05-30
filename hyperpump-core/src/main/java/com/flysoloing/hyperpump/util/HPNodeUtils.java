@@ -51,4 +51,18 @@ public class HPNodeUtils {
     public static String getPath(String firstNodeName, String secondNodeName, String thirdNodeName, String fourthNodeName) {
         return String.format("/%s/%s/%s/%s", firstNodeName, secondNodeName, thirdNodeName, fourthNodeName);
     }
+
+    /**
+     * 获取节点路径
+     *
+     * @param firstNodeName 第一级节点名称
+     * @param secondNodeName 第二级节点名称
+     * @param thirdNodeName 第三级节点名称
+     * @param fourthNodeName 第四级节点名称
+     * @param fifthNodeName 第五级节点名称
+     * @return 节点路径
+     */
+    public static String getPath(String firstNodeName, String secondNodeName, String thirdNodeName, String fourthNodeName, String fifthNodeName) {
+        return String.format("/%s/%s/%s/%s/%s", firstNodeName, secondNodeName, thirdNodeName, fourthNodeName, fifthNodeName);
+    }
 }

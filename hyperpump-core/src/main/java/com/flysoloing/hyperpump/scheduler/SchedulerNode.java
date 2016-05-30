@@ -32,6 +32,8 @@ public class SchedulerNode {
 //        |---
 //        |---
 
+    private String namespace = "SCHEDULERS";
+
     private String rootNodeName;
 
     private String ipNodeName = "ip";
@@ -55,55 +57,55 @@ public class SchedulerNode {
     private String statusNodeName = "status";
 
     public SchedulerNode(SchedulerNodeConf schedulerNodeConf) {
-        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerNodeConf.getIp(), String.valueOf(schedulerNodeConf.getPid()), schedulerNodeConf.getObjName());
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerNodeConf.getIp(), schedulerNodeConf.getPid(), schedulerNodeConf.getObjName());
     }
 
     public String getRootNodePath() {
-        return HPNodeUtils.getPath(rootNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName);
     }
 
     public String getIpNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, ipNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, ipNodeName);
     }
 
     public String getPidNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, pidNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, pidNodeName);
     }
 
     public String getObjNameNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, objNameNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, objNameNodeName);
     }
 
     public String getDescriptionNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, descriptionNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
     }
 
     public String getTaskListNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, taskListNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName);
     }
 
     public String getTaskNameNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(rootNodeName, taskListNodeName, taskNameNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskNameNodeName);
     }
 
     public String getBatchNoNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(rootNodeName, taskListNodeName, taskName, batchNoNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, batchNoNodeName);
     }
 
     public String getTaskClassNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(rootNodeName, taskListNodeName, taskName, taskClassNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, taskClassNodeName);
     }
 
     public String getTaskStatusNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(rootNodeName, taskListNodeName, taskName, taskStatusNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, taskStatusNodeName);
     }
 
     public String getStatusNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, statusNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, statusNodeName);
     }
 
 }

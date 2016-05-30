@@ -1,6 +1,10 @@
 package com.flysoloing.hyperpump;
 
 import com.flysoloing.hyperpump.base.AbstractBaseTask;
+import com.flysoloing.hyperpump.executor.ExecutorNodeConf;
+import com.flysoloing.hyperpump.executor.ExecutorNodeService;
+import com.flysoloing.hyperpump.scheduler.SchedulerNodeConf;
+import com.flysoloing.hyperpump.scheduler.SchedulerNodeService;
 import com.flysoloing.hyperpump.task.TaskNodeConf;
 import com.flysoloing.hyperpump.task.TaskNodeScheduler;
 import com.flysoloing.hyperpump.task.TaskNodeService;
@@ -19,6 +23,10 @@ public class App {
 
     private TaskNodeConf taskNodeConf = new TaskNodeConf("hptasktest", AbstractBaseTask.class, "0/5 * * * * ?");
 
+    private SchedulerNodeConf schedulerNodeConf = new SchedulerNodeConf("schedulerNodeConf01");
+
+    private ExecutorNodeConf executorNodeConf = new ExecutorNodeConf("executorNodeConf01");
+
     public static void main( String[] args ) {
         new App().init();
     }
@@ -28,8 +36,16 @@ public class App {
         registryCenter.init();
         taskNodeConf.setDescription("this is my first test");
 
+        //初始化任务节点服务
         new TaskNodeService(registryCenter, taskNodeConf).init();
+        //初始化任务节点调度器
         new TaskNodeScheduler(registryCenter, taskNodeConf).init();
+
+        //初始化调度器节点服务
+        new SchedulerNodeService(registryCenter, schedulerNodeConf).init();
+
+        //初始化执行器节点服务
+        new ExecutorNodeService(registryCenter, executorNodeConf).init();
 
         //注册任务节点
 //        String nodePath = "/taskSet/task1";

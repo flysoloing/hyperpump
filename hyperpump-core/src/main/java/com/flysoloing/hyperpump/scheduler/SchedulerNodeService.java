@@ -31,12 +31,15 @@ public class SchedulerNodeService implements NodeService {
     public void registerNodeInfo() {
         if (!registryCenter.isExisted(schedulerNode.getRootNodePath())) {
             //TODO
+            registryCenter.persist(schedulerNode.getIpNodePath(), schedulerNodeConf.getIp());
+            registryCenter.persist(schedulerNode.getPidNodePath(), schedulerNodeConf.getPid());
+            registryCenter.persist(schedulerNode.getObjNameNodePath(), schedulerNodeConf.getObjName());
         }
     }
 
     public void registerNodeListener() {
         TreeCache treeCache = registryCenter.getTreeCache(schedulerNode.getRootNodePath());
         if (treeCache != null)
-            treeCache.getListenable().addListener(new SchedulerNodeListener());
+            treeCache.getListenable().addListener(new SchedulerNodeListener(registryCenter));
     }
 }

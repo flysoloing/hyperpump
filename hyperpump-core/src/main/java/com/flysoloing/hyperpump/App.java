@@ -19,7 +19,7 @@ public class App
         //06、区分TaskStatus和NodeStatus状态枚举
         //07、将PORT修改为PID，PID为JVM示例的PID，用以区分
         //08、给Scheduler设置不同的调度策略，比如公平策略，其他权重策略等等
-        //09、
+        //09、增加连接管理，如果客户端失去连接，应该将对应的SchedulerNode节点和ExecutorNode节点删除
         //10、
         //11、
         //12、

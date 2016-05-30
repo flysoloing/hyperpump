@@ -1,7 +1,9 @@
 package com.flysoloing.hyperpump.executor;
 
 import com.flysoloing.hyperpump.listener.AbstractNodeListener;
+import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 
 /**
@@ -10,8 +12,22 @@ import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
  */
 public class ExecutorNodeListener extends AbstractNodeListener {
 
+    public ExecutorNodeListener(RegistryCenter registryCenter) {
+        super(registryCenter);
+    }
+
     @Override
-    protected void dataChanged(CuratorFramework client, TreeCacheEvent event, String path) {
+    protected void dataChanged(RegistryCenter registryCenter, TreeCacheEvent event, String path) {
         //TODO
+        ChildData data = event.getData();
+        if (data == null) {
+            System.out.println("Executor Node Listener No data in event[" + event + "]");
+        } else {
+            System.out.println("Executor Node Listener Receive event: "
+                    + "type=" + event.getType()
+                    + ", path=" + data.getPath()
+                    + ", data=" + new String(data.getData())
+                    + ", stat=" + data.getStat());
+        }
     }
 }

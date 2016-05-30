@@ -20,6 +20,8 @@ public class TaskNode {
 //        |---
 //        |---
 
+    private String namespace = "TASKS";
+
     private String rootNodeName;
 
     private String taskClassNodeName = "taskClass";
@@ -39,30 +41,30 @@ public class TaskNode {
     }
 
     public String getRootNodePath() {
-        return HPNodeUtils.getPath(rootNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName);
     }
 
     public String getTaskClassNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, taskClassNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskClassNodeName);
     }
 
     public String getTaskTypeNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, taskTypeNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskTypeNodeName);
     }
 
     public String getCronNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, cronNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, cronNodeName);
     }
 
     public String getDescriptionNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, descriptionNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
     }
 
     public String getBatchNoNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, batchNoNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, batchNoNodeName);
     }
 
     public String getStatusNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, statusNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, statusNodeName);
     }
 }

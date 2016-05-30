@@ -31,12 +31,15 @@ public class ExecutorNodeService implements NodeService {
     public void registerNodeInfo() {
         if (!registryCenter.isExisted(executorNode.getRootNodePath())) {
             //TODO
+            registryCenter.persist(executorNode.getIpNodePath(), executorNodeConf.getIp());
+            registryCenter.persist(executorNode.getPidNodePath(), executorNodeConf.getPid());
+            registryCenter.persist(executorNode.getObjNameNodePath(), executorNodeConf.getObjName());
         }
     }
 
     public void registerNodeListener() {
         TreeCache treeCache = registryCenter.getTreeCache(executorNode.getRootNodePath());
         if (treeCache != null)
-            treeCache.getListenable().addListener(new ExecutorNodeListener());
+            treeCache.getListenable().addListener(new ExecutorNodeListener(registryCenter));
     }
 }

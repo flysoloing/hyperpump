@@ -45,6 +45,6 @@ public class TaskNodeService implements NodeService {
         //如果不为空，则为该treeCache添加监听器
         TreeCache treeCache = registryCenter.getTreeCache(taskNode.getRootNodePath());
         if (treeCache != null)
-            treeCache.getListenable().addListener(new TaskNodeListener());
+            treeCache.getListenable().addListener(new TaskNodeListener(registryCenter));
     }
 }

@@ -1,5 +1,7 @@
 package com.flysoloing.hyperpump.executor;
 
+import com.flysoloing.hyperpump.util.LocalhostUtils;
+
 /**
  * @author laitao
  * @since 2016-05-19 01:10:33
@@ -8,13 +10,14 @@ public class ExecutorNodeConf {
 
     private String ip;
 
-    private int pid;
+    private String pid;
 
     private String objName;
 
     private String description;
 
     public ExecutorNodeConf(String objName) {
+//        this.objName = this.getClass().getSimpleName();
         this.objName = objName;
     }
 
@@ -24,18 +27,18 @@ public class ExecutorNodeConf {
     }
 
     public String getIp() {
-        return ip;
+        return LocalhostUtils.getIp();
     }
 
     public void setIp(String ip) {
         this.ip = ip;
     }
 
-    public int getPid() {
-        return pid;
+    public String getPid() {
+        return LocalhostUtils.getPid();
     }
 
-    public void setPid(int pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 
