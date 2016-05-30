@@ -8,20 +8,18 @@ public class ExecutorNodeConf {
 
     private String ip;
 
-    private int port;
+    private int pid;
 
     private String objName;
 
     private String description;
 
-    public ExecutorNodeConf(String ip, int port, String objName) {
-        this.ip = ip;
-        this.port = port;
+    public ExecutorNodeConf(String objName) {
         this.objName = objName;
     }
 
-    public ExecutorNodeConf(String ip, int port, String objName, String description) {
-        this(ip, port, objName);
+    public ExecutorNodeConf(String objName, String description) {
+        this(objName);
         this.description = description;
     }
 
@@ -33,12 +31,12 @@ public class ExecutorNodeConf {
         this.ip = ip;
     }
 
-    public int getPort() {
-        return port;
+    public int getPid() {
+        return pid;
     }
 
-    public void setPort(int port) {
-        this.port = port;
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public String getObjName() {

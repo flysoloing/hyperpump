@@ -10,9 +10,9 @@ import com.google.common.base.Joiner;
  */
 public class SchedulerNode {
 
-//    /SCHEDULER_IP_PORT_OBJNAME
+//    /SCHEDULER_IP_PID_OBJNAME
 //        |---ip：ip地址
-//        |---port：端口号
+//        |---pid：端口号
 //        |---objName：对象名
 //        |---description：描述
 //        |---taskList
@@ -36,7 +36,7 @@ public class SchedulerNode {
 
     private String ipNodeName = "ip";
 
-    private String portNodeName = "port";
+    private String pidNodeName = "pid";
 
     private String objNameNodeName = "objName";
 
@@ -55,7 +55,7 @@ public class SchedulerNode {
     private String statusNodeName = "status";
 
     public SchedulerNode(SchedulerNodeConf schedulerNodeConf) {
-        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerNodeConf.getIp(), String.valueOf(schedulerNodeConf.getPort()), schedulerNodeConf.getObjName());
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerNodeConf.getIp(), String.valueOf(schedulerNodeConf.getPid()), schedulerNodeConf.getObjName());
     }
 
     public String getRootNodePath() {
@@ -66,8 +66,8 @@ public class SchedulerNode {
         return HPNodeUtils.getPath(rootNodeName, ipNodeName);
     }
 
-    public String getPortNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, portNodeName);
+    public String getPidNodePath() {
+        return HPNodeUtils.getPath(rootNodeName, pidNodeName);
     }
 
     public String getObjNameNodePath() {

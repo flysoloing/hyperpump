@@ -10,9 +10,9 @@ import com.google.common.base.Joiner;
  */
 public class ExecutorNode {
 
-//    /EXECUTOR_IP_PORT_OBJNAME
+//    /EXECUTOR_IP_PID_OBJNAME
 //        |---ip：ip地址
-//        |---port：端口号
+//        |---pid：端口号
 //        |---objName：对象名
 //        |---description：描述
 //        |---taskName：任务名
@@ -28,7 +28,7 @@ public class ExecutorNode {
 
     private String ipNodeName = "ip";
 
-    private String portNodeName = "port";
+    private String pidNodeName = "pid";
 
     private String objNameNodeName = "objName";
 
@@ -47,7 +47,7 @@ public class ExecutorNode {
     private String statusNodeName = "status";
 
     public ExecutorNode(ExecutorNodeConf executorNodeConf) {
-        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_EXECUTOR, executorNodeConf.getIp(), String.valueOf(executorNodeConf.getPort()), executorNodeConf.getObjName());
+        this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_EXECUTOR, executorNodeConf.getIp(), String.valueOf(executorNodeConf.getPid()), executorNodeConf.getObjName());
     }
 
     public String getRootNodePath() {
@@ -59,7 +59,7 @@ public class ExecutorNode {
     }
 
     public String getPortNodePath() {
-        return HPNodeUtils.getPath(rootNodeName, portNodeName);
+        return HPNodeUtils.getPath(rootNodeName, pidNodeName);
     }
 
     public String getObjNameNodePath() {
