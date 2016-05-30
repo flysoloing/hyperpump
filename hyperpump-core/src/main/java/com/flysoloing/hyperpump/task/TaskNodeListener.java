@@ -6,6 +6,8 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 
+import java.util.Map;
+
 /**
  * @author laitao
  * @since 2016-05-26 01:07:27
@@ -29,6 +31,8 @@ public class TaskNodeListener extends AbstractNodeListener {
                     + ", data=" + new String(data.getData())
                     + ", stat=" + data.getStat());
         }
-
+        for (Map.Entry entry : registryCenter.getTreeCacheMap().entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
     }
 }
