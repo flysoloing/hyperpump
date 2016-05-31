@@ -21,6 +21,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.flysoloing.hyperpump</groupId>
             <artifactId>hyperpump-core</artifactId>
             <version>${project.parent.version}</version>

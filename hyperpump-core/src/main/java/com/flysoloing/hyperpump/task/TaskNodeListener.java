@@ -22,7 +22,6 @@ public class TaskNodeListener extends AbstractNodeListener {
         super(registryCenter);
     }
 
-    @Override
     protected void dataChanged(RegistryCenter registryCenter, TreeCacheEvent event, String path) {
         //TODO 监听到TaskNode节点数据变化后需要处理的事儿，如果path是status状态变化，则进行相关处理
         ChildData data = event.getData();

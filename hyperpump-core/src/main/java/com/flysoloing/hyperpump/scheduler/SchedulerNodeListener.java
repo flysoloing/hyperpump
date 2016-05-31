@@ -22,7 +22,6 @@ public class SchedulerNodeListener extends AbstractNodeListener {
         super(registryCenter);
     }
 
-    @Override
     protected void dataChanged(RegistryCenter registryCenter, TreeCacheEvent event, String path) {
         //TODO
         ChildData data = event.getData();
