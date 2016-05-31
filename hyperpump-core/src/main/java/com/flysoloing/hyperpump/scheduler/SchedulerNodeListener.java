@@ -5,12 +5,18 @@ import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * 调度器节点监听器
+ *
  * @author laitao
  * @since 2016-05-26 01:40:59
  */
 public class SchedulerNodeListener extends AbstractNodeListener {
+
+    private static final Logger logger = LoggerFactory.getLogger(SchedulerNodeListener.class);
 
     public SchedulerNodeListener(RegistryCenter registryCenter) {
         super(registryCenter);

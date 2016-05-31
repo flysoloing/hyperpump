@@ -5,12 +5,16 @@ import com.flysoloing.hyperpump.internal.InternalTask;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author laitao
  * @since 2016-05-19 00:19:44
  */
 public class TaskNodeScheduler {
+
+    private static final Logger logger = LoggerFactory.getLogger(TaskNodeScheduler.class);
 
     private RegistryCenter registryCenter;
 
@@ -22,6 +26,12 @@ public class TaskNodeScheduler {
 
     private Scheduler scheduler;
 
+    /**
+     * 构造器
+     *
+     * @param registryCenter 注册中心
+     * @param taskNodeConf 任务节点配置
+     */
     public TaskNodeScheduler(RegistryCenter registryCenter, TaskNodeConf taskNodeConf) {
         this.registryCenter = registryCenter;
         this.taskNodeConf = taskNodeConf;
@@ -31,6 +41,9 @@ public class TaskNodeScheduler {
         this.jobDetail = JobBuilder.newJob(InternalTask.class).withIdentity(taskNodeConf.getTaskName()).build();
     }
 
+    /**
+     * 任务节点调度器初始化
+     */
     public void init() {
         jobDetail.getJobDataMap().put("registryCenter", registryCenter);
         jobDetail.getJobDataMap().put("taskNode", taskNode);

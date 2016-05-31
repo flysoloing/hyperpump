@@ -21,5 +21,9 @@ public interface NodeService {
      */
     void registerNodeListener();
 
+    /**
+     * 在注册中心注册连接状态监听器
+     */
+    void registerConnListener();
     //TODO 增加节点数据内容的操作，如CRUD等
 }

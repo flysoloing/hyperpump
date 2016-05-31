@@ -3,6 +3,8 @@ package com.flysoloing.hyperpump.task;
 import org.quartz.Job;
 
 /**
+ * 任务节点配置
+ *
  * @author laitao
  * @since 2016-05-15 16:34:34
  */

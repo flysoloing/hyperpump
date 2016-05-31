@@ -5,6 +5,8 @@ import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -13,6 +15,8 @@ import java.util.Map;
  * @since 2016-05-26 01:07:27
  */
 public class TaskNodeListener extends AbstractNodeListener {
+
+    private static final Logger logger = LoggerFactory.getLogger(TaskNodeListener.class);
 
     public TaskNodeListener(RegistryCenter registryCenter) {
         super(registryCenter);

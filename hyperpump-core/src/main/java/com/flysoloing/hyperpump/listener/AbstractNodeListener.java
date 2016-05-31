@@ -6,6 +6,8 @@ import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.apache.curator.framework.recipes.cache.TreeCacheListener;
 
 /**
+ * 节点监听器抽象类
+ *
  * @author laitao
  * @since 2016-05-23 00:56:07
  */
@@ -27,5 +29,12 @@ public abstract class AbstractNodeListener implements TreeCacheListener {
 
 //    protected abstract void dataChanged(CuratorFramework client, TreeCacheEvent event, String path);
 
+    /**
+     * 数据变化后处理方法
+     *
+     * @param registryCenter 注册中心
+     * @param event 事件
+     * @param path 路径
+     */
     protected abstract void dataChanged(RegistryCenter registryCenter, TreeCacheEvent event, String path);
 }

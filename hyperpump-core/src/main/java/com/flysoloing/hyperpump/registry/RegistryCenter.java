@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class RegistryCenter {
 
-    Logger logger = LoggerFactory.getLogger(RegistryCenter.class);
+    private static final Logger logger = LoggerFactory.getLogger(RegistryCenter.class);
 
     public static final String CHARSET_NAME_UTF8 = "UTF-8";
 

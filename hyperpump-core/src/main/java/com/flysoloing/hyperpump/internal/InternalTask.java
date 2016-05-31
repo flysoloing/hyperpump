@@ -8,6 +8,8 @@ import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +18,8 @@ import java.util.concurrent.TimeUnit;
  * @since 2016-05-20 18:00:03
  */
 public class InternalTask implements Job {
+
+    private static final Logger logger = LoggerFactory.getLogger(InternalTask.class);
 
     private RegistryCenter registryCenter;
 

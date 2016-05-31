@@ -5,6 +5,8 @@ import com.flysoloing.hyperpump.util.HPNodeUtils;
 import com.google.common.base.Joiner;
 
 /**
+ * 执行器节点
+ *
  * @author laitao
  * @since 2016-05-13 01:01:04
  */
@@ -18,7 +20,7 @@ public class ExecutorNode {
 //        |---taskName：任务名
 //        |---taskClass：任务类
 //        |---batchNo：批次号
-//        |---taskStatus：任务类
+//        |---taskStatus：任务状态
 //        |---offset：偏移量？待定
 //        |---status：状态
 //        |---

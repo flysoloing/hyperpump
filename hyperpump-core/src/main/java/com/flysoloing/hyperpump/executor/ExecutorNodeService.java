@@ -3,12 +3,18 @@ package com.flysoloing.hyperpump.executor;
 import com.flysoloing.hyperpump.base.NodeService;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.recipes.cache.TreeCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * 执行器节点服务
+ *
  * @author laitao
  * @since 2016-05-19 01:10:11
  */
 public class ExecutorNodeService implements NodeService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExecutorNodeService.class);
 
     private RegistryCenter registryCenter;
 
@@ -41,5 +47,9 @@ public class ExecutorNodeService implements NodeService {
         TreeCache treeCache = registryCenter.getTreeCache(executorNode.getRootNodePath());
         if (treeCache != null)
             treeCache.getListenable().addListener(new ExecutorNodeListener(registryCenter));
+    }
+
+    public void registerConnListener() {
+        //TODO
     }
 }

@@ -4,12 +4,16 @@ import com.flysoloing.hyperpump.base.NodeService;
 import com.flysoloing.hyperpump.common.TaskStatus;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.recipes.cache.TreeCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author laitao
  * @since 2016-05-19 01:09:37
  */
 public class TaskNodeService implements NodeService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TaskNodeService.class);
 
     private RegistryCenter registryCenter;
 
@@ -46,5 +50,9 @@ public class TaskNodeService implements NodeService {
         TreeCache treeCache = registryCenter.getTreeCache(taskNode.getRootNodePath());
         if (treeCache != null)
             treeCache.getListenable().addListener(new TaskNodeListener(registryCenter));
+    }
+
+    public void registerConnListener() {
+        //TODO
     }
 }
