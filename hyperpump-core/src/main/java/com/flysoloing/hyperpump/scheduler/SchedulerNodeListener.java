@@ -26,9 +26,9 @@ public class SchedulerNodeListener extends AbstractNodeListener {
         //TODO
         ChildData data = event.getData();
         if (data == null) {
-            System.out.println("Scheduler Node Listener No data in event[" + event + "]");
+            logger.info("Scheduler Node Listener No data in event[" + event + "]");
         } else {
-            System.out.println("Scheduler Node Listener Receive event: "
+            logger.info("Scheduler Node Listener Receive event: "
                     + "type=" + event.getType()
                     + ", path=" + data.getPath()
                     + ", data=" + new String(data.getData())

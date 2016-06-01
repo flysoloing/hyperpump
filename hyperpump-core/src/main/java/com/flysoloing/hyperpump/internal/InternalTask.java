@@ -29,27 +29,26 @@ public class InternalTask implements Job {
         //1、试图获取锁，如果能获取锁，则往下进行，否则退出并释放锁
         //2、获取TaskNode节点的status状态，若节点是运行状态，则退出并释放锁；否则往下进行
         //3、开启事务，将TaskNode节点的status状态修改为运行中，同时将batchNo加1后更新，然后提交。完成后释放锁
-        System.out.println("-------------" + context.getScheduler().hashCode() + "-------------");
         InterProcessMutex lock = new InterProcessMutex(registryCenter.getCuratorFramework(), taskNode.getStatusNodePath());
         try {
             if (lock.acquire(2000, TimeUnit.MILLISECONDS)) {
                 try {
-                    System.out.println("已获取锁");
+                    logger.info("已获取锁");
                     String status = registryCenter.get(taskNode.getStatusNodePath());
-                    System.out.println("当前TaskNode节点状态：" + status);
+                    logger.info("当前TaskNode节点状态：{}", status);
                     if (status != null && status.equals(TaskStatus.READY.getStatus())) {
                         String batchNo = registryCenter.get(taskNode.getBatchNoNodePath());
-                        System.out.println("当前TaskNode节点batchNo：" + batchNo);
+                        logger.info("当前TaskNode节点batchNo：{}", batchNo);
                         Long longBatchNo = Long.valueOf(batchNo);
                         longBatchNo += 1l;
-                        System.out.println("当前TaskNode节点batchNo修改后：" + longBatchNo);
+                        logger.info("当前TaskNode节点batchNo修改后：{}", longBatchNo);
                         //TODO 需要开通事务同步更新
                         registryCenter.update(taskNode.getBatchNoNodePath(), String.valueOf(longBatchNo));
                         registryCenter.update(taskNode.getStatusNodePath(), TaskStatus.RUNNING.getStatus());
                     }
                 } finally {
                     lock.release();
-                    System.out.println("已释放锁");
+                    logger.info("已释放锁");
                 }
             }
         } catch (Exception e) {

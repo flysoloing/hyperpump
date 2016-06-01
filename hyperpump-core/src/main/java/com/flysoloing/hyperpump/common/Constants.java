@@ -6,6 +6,10 @@ package com.flysoloing.hyperpump.common;
  */
 public class Constants {
 
+    //----------------CHARSET----------------
+    public static final String CHARSET_NAME_UTF8 = "UTF-8";
+
+    //----------------SEPARATOR----------------
     public static final String SEPARATOR_UNDERLINE = "_";
 
     public static final String SEPARATOR_SLASH = "/";
@@ -20,6 +24,7 @@ public class Constants {
 
     public static final String SEPARATOR_SPACE = " ";
 
+    //----------------NODE_PREFIX----------------
     public static final String NODE_PREFIX_EXECUTOR = "EXECUTOR";
 
     public static final String NODE_PREFIX_SCHEDULER = "SCHEDULER";

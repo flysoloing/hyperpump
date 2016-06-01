@@ -1,5 +1,6 @@
 package com.flysoloing.hyperpump.registry;
 
+import com.flysoloing.hyperpump.common.Constants;
 import com.flysoloing.hyperpump.exception.HPExceptionHandler;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -26,8 +27,6 @@ import java.util.Map;
 public class RegistryCenter {
 
     private static final Logger logger = LoggerFactory.getLogger(RegistryCenter.class);
-
-    public static final String CHARSET_NAME_UTF8 = "UTF-8";
 
     private RegistryCenterConf registryCenterConf;
 
@@ -106,7 +105,7 @@ public class RegistryCenter {
      */
     public String getDirectly(String nodePath) {
         try {
-            return new String(curatorFramework.getData().forPath(nodePath), Charset.forName(CHARSET_NAME_UTF8));
+            return new String(curatorFramework.getData().forPath(nodePath), Charset.forName(Constants.CHARSET_NAME_UTF8));
         } catch (Exception e) {
             HPExceptionHandler.handleException(e);
             return null;
@@ -126,7 +125,7 @@ public class RegistryCenter {
         }
         ChildData childData = treeCache.getCurrentData(nodePath);
         if (null != childData) {
-            return null == childData.getData() ? null : new String(childData.getData(), Charset.forName(CHARSET_NAME_UTF8));
+            return null == childData.getData() ? null : new String(childData.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
         }
         return getDirectly(nodePath);
     }
@@ -187,7 +186,7 @@ public class RegistryCenter {
             curatorFramework.inTransaction()
                     .check().forPath(nodePath)
                     .and()
-                    .setData().forPath(nodePath, value.getBytes(Charset.forName(CHARSET_NAME_UTF8)))
+                    .setData().forPath(nodePath, value.getBytes(Charset.forName(Constants.CHARSET_NAME_UTF8)))
                     .and()
                     .commit();
         } catch (Exception e) {
@@ -217,7 +216,10 @@ public class RegistryCenter {
     public void persist(String nodePath, String value) {
         if (!isExisted(nodePath)) {
             try {
-                curatorFramework.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(nodePath, value.getBytes(Charset.forName(CHARSET_NAME_UTF8)));
+                curatorFramework.create()
+                        .creatingParentsIfNeeded()
+                        .withMode(CreateMode.PERSISTENT)
+                        .forPath(nodePath, value.getBytes(Charset.forName(Constants.CHARSET_NAME_UTF8)));
             } catch (Exception e) {
                 HPExceptionHandler.handleException(e);
             }
