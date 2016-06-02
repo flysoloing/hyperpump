@@ -1,6 +1,8 @@
 package com.flysoloing.hyperpump.base;
 
 /**
+ * 节点服务接口
+ *
  * @author laitao
  * @since 2016-05-20 14:18:13
  */

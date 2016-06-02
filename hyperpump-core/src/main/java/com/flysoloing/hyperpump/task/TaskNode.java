@@ -23,7 +23,7 @@ public class TaskNode implements Node {
 //        |---
 //        |---
 
-    private String namespace = "TASKS";
+    private String namespace = Constants.NODE_NAMESPACE_TASKS;
 
     private String rootNodeName;
 

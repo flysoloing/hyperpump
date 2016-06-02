@@ -35,7 +35,7 @@ public class SchedulerNode implements Node {
 //        |---
 //        |---
 
-    private String namespace = "SCHEDULERS";
+    private String namespace = Constants.NODE_NAMESPACE_SCHEDULERS;
 
     private String rootNodeName;
 

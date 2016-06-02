@@ -5,6 +5,7 @@ import com.flysoloing.hyperpump.common.TaskStatus;
 import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import com.flysoloing.hyperpump.scheduler.SchedulerNode;
+import com.flysoloing.hyperpump.util.HPNodeUtils;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.slf4j.Logger;
@@ -38,7 +39,10 @@ public class TaskNodeListener extends AbstractNodeListener<TaskNode> {
                 //如果type=NODE_UPDATED, path=/TASKS/TASK_hptasktest/status, data=running
                 //获取所有的状态为正常的SchedulerNode列表，依据任务类型和策略，选择一个或多个SchedulerNode
                 logger.info("got it, do whatever u want to do");
-                List<String> children = registryCenter.getChildren("/SCHEDULERS");
+                List<String> children = registryCenter.getChildren(HPNodeUtils.getPath(Constants.NODE_NAMESPACE_SCHEDULERS));
+                //根据特定策略选择一个SchedulerNode
+                //尝试获取这个SchedulerNode的锁，并执行往其taskList节点增加新任务
+                //TODO
                 for (String str : children) {
                     logger.info("child path: {}", str);
                 }

@@ -30,4 +30,11 @@ public class Constants {
     public static final String NODE_PREFIX_SCHEDULER = "SCHEDULER";
 
     public static final String NODE_PREFIX_TASK = "TASK";
+
+    //----------------NODE_NAMESPACE----------------
+    public static final String NODE_NAMESPACE_EXECUTORS = "EXECUTORS";
+
+    public static final String NODE_NAMESPACE_SCHEDULERS = "SCHEDULERS";
+
+    public static final String NODE_NAMESPACE_TASKS = "TASKS";
 }

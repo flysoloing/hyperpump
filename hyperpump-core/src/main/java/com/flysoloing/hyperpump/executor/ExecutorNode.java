@@ -27,7 +27,7 @@ public class ExecutorNode implements Node {
 //        |---
 //        |---
 
-    private String namespace = "EXECUTORS";
+    private String namespace = Constants.NODE_NAMESPACE_EXECUTORS;
 
     private String rootNodeName;
 
