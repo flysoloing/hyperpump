@@ -1,5 +1,6 @@
 package com.flysoloing.hyperpump.executor;
 
+import com.flysoloing.hyperpump.base.Node;
 import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
@@ -14,15 +15,15 @@ import org.slf4j.LoggerFactory;
  * @author laitao
  * @since 2016-05-26 01:41:36
  */
-public class ExecutorNodeListener extends AbstractNodeListener {
+public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
 
     private static final Logger logger = LoggerFactory.getLogger(ExecutorNodeService.class);
 
-    public ExecutorNodeListener(RegistryCenter registryCenter) {
-        super(registryCenter);
+    public ExecutorNodeListener(RegistryCenter registryCenter, ExecutorNode executorNode) {
+        super(registryCenter, executorNode);
     }
 
-    protected void dataChanged(RegistryCenter registryCenter, TreeCacheEvent event, String path) {
+    protected void dataChanged(RegistryCenter registryCenter, ExecutorNode executorNode, TreeCacheEvent event, String path) {
         //TODO
         ChildData data = event.getData();
         if (data == null) {

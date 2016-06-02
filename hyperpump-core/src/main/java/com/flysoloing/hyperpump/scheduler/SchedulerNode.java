@@ -1,5 +1,6 @@
 package com.flysoloing.hyperpump.scheduler;
 
+import com.flysoloing.hyperpump.base.Node;
 import com.flysoloing.hyperpump.common.Constants;
 import com.flysoloing.hyperpump.util.HPNodeUtils;
 import com.google.common.base.Joiner;
@@ -10,7 +11,7 @@ import com.google.common.base.Joiner;
  * @author laitao
  * @since 2016-05-13 01:01:20
  */
-public class SchedulerNode {
+public class SchedulerNode implements Node {
 
 //    /SCHEDULER_IP_PID_OBJNAME
 //        |---ip：ip地址

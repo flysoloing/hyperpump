@@ -46,7 +46,7 @@ public class SchedulerNodeService implements NodeService {
     public void registerNodeListener() {
         TreeCache treeCache = registryCenter.getTreeCache(schedulerNode.getRootNodePath());
         if (treeCache != null)
-            treeCache.getListenable().addListener(new SchedulerNodeListener(registryCenter));
+            treeCache.getListenable().addListener(new SchedulerNodeListener(registryCenter, schedulerNode));
     }
 
     public void registerConnListener() {

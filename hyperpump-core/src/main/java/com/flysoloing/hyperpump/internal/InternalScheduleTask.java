@@ -4,6 +4,7 @@ import com.flysoloing.hyperpump.common.TaskStatus;
 import com.flysoloing.hyperpump.exception.HPExceptionHandler;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import com.flysoloing.hyperpump.task.TaskNode;
+import com.flysoloing.hyperpump.util.HPNodeUtils;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -14,12 +15,14 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 内部调度任务
+ *
  * @author laitao
  * @since 2016-05-20 18:00:03
  */
-public class InternalTask implements Job {
+public class InternalScheduleTask implements Job {
 
-    private static final Logger logger = LoggerFactory.getLogger(InternalTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(InternalScheduleTask.class);
 
     private RegistryCenter registryCenter;
 
@@ -40,10 +43,10 @@ public class InternalTask implements Job {
                         String batchNo = registryCenter.get(taskNode.getBatchNoNodePath());
                         logger.info("当前TaskNode节点batchNo：{}", batchNo);
                         Long longBatchNo = Long.valueOf(batchNo);
-                        longBatchNo += 1l;
-                        logger.info("当前TaskNode节点batchNo修改后：{}", longBatchNo);
+                        batchNo = HPNodeUtils.incrBatchNo(longBatchNo);
+                        logger.info("当前TaskNode节点batchNo修改后：{}", batchNo);
                         //TODO 需要开通事务同步更新
-                        registryCenter.update(taskNode.getBatchNoNodePath(), String.valueOf(longBatchNo));
+                        registryCenter.update(taskNode.getBatchNoNodePath(), String.valueOf(batchNo));
                         registryCenter.update(taskNode.getStatusNodePath(), TaskStatus.RUNNING.getStatus());
                     }
                 } finally {

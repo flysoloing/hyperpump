@@ -46,7 +46,7 @@ public class ExecutorNodeService implements NodeService {
     public void registerNodeListener() {
         TreeCache treeCache = registryCenter.getTreeCache(executorNode.getRootNodePath());
         if (treeCache != null)
-            treeCache.getListenable().addListener(new ExecutorNodeListener(registryCenter));
+            treeCache.getListenable().addListener(new ExecutorNodeListener(registryCenter, executorNode));
     }
 
     public void registerConnListener() {

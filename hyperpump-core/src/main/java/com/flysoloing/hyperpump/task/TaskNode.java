@@ -1,5 +1,6 @@
 package com.flysoloing.hyperpump.task;
 
+import com.flysoloing.hyperpump.base.Node;
 import com.flysoloing.hyperpump.common.Constants;
 import com.flysoloing.hyperpump.util.HPNodeUtils;
 import com.google.common.base.Joiner;
@@ -10,7 +11,7 @@ import com.google.common.base.Joiner;
  * @author laitao
  * @since 2016-05-13 01:01:30
  */
-public class TaskNode {
+public class TaskNode implements Node {
 
 //    /TASK_taskName
 //        |---taskClass：任务类

@@ -234,7 +234,7 @@ public class RegistryCenter {
      * @param nodePath 节点路径
      * @return 孩子节点列表
      */
-    public List<String> getChildrenPaths(String nodePath) {
+    public List<String> getChildren(String nodePath) {
         try {
             return curatorFramework.getChildren().forPath(nodePath);
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.flysoloing.hyperpump.scheduler;
 
+import com.flysoloing.hyperpump.base.Node;
 import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
@@ -14,15 +15,15 @@ import org.slf4j.LoggerFactory;
  * @author laitao
  * @since 2016-05-26 01:40:59
  */
-public class SchedulerNodeListener extends AbstractNodeListener {
+public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
 
     private static final Logger logger = LoggerFactory.getLogger(SchedulerNodeListener.class);
 
-    public SchedulerNodeListener(RegistryCenter registryCenter) {
-        super(registryCenter);
+    public SchedulerNodeListener(RegistryCenter registryCenter, SchedulerNode schedulerNode) {
+        super(registryCenter, schedulerNode);
     }
 
-    protected void dataChanged(RegistryCenter registryCenter, TreeCacheEvent event, String path) {
+    protected void dataChanged(RegistryCenter registryCenter, SchedulerNode schedulerNode, TreeCacheEvent event, String path) {
         //TODO
         ChildData data = event.getData();
         if (data == null) {

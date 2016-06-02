@@ -65,4 +65,20 @@ public class HPNodeUtils {
     public static String getPath(String firstNodeName, String secondNodeName, String thirdNodeName, String fourthNodeName, String fifthNodeName) {
         return String.format("/%s/%s/%s/%s/%s", firstNodeName, secondNodeName, thirdNodeName, fourthNodeName, fifthNodeName);
     }
+
+    /**
+     * 将batchNo做加1操作，长度为19位，不得大于{@code Long.MAX_VALUE}
+     *
+     * <P>如果batchNo大于{@code Long.MAX_VALUE}，则重新从1开始
+     *
+     * @param batchNo 批次号
+     * @return 加1后的batchNo
+     */
+    public static String incrBatchNo(long batchNo) {
+        if (batchNo == Long.MAX_VALUE)
+            return String.format("%019d", 1L);
+        batchNo += 1L;
+        return String.format("%019d", batchNo);
+    }
+
 }

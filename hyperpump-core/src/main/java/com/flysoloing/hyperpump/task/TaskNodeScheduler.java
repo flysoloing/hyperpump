@@ -1,7 +1,7 @@
 package com.flysoloing.hyperpump.task;
 
 import com.flysoloing.hyperpump.exception.HPExceptionHandler;
-import com.flysoloing.hyperpump.internal.InternalTask;
+import com.flysoloing.hyperpump.internal.InternalScheduleTask;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
@@ -38,7 +38,7 @@ public class TaskNodeScheduler {
         this.taskNode = new TaskNode(taskNodeConf);
         //TODO 把TaskClass换成内置的Task，其作用是修改TaskNode节点的status状态并为batchNo加一操作
         //this.jobDetail = JobBuilder.newJob(taskNodeConf.getTaskClass()).withIdentity(taskNodeConf.getTaskName()).build();
-        this.jobDetail = JobBuilder.newJob(InternalTask.class).withIdentity(taskNodeConf.getTaskName()).build();
+        this.jobDetail = JobBuilder.newJob(InternalScheduleTask.class).withIdentity(taskNodeConf.getTaskName()).build();
     }
 
     /**

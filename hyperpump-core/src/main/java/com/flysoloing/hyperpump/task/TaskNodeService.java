@@ -3,6 +3,7 @@ package com.flysoloing.hyperpump.task;
 import com.flysoloing.hyperpump.base.NodeService;
 import com.flysoloing.hyperpump.common.TaskStatus;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
+import com.flysoloing.hyperpump.util.HPNodeUtils;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,7 @@ public class TaskNodeService implements NodeService {
             registryCenter.persist(taskNode.getCronNodePath(), taskNodeConf.getCron());
             registryCenter.persist(taskNode.getDescriptionNodePath(), taskNodeConf.getDescription());
             registryCenter.persist(taskNode.getTaskTypeNodePath(), "");
-            registryCenter.persist(taskNode.getBatchNoNodePath(), "0000000001");  //格式化，如：0000000000000000001
+            registryCenter.persist(taskNode.getBatchNoNodePath(), HPNodeUtils.incrBatchNo(0L));  //格式化，如：0000000000000000001
             registryCenter.persist(taskNode.getStatusNodePath(), TaskStatus.READY.getStatus());
         }
     }
@@ -49,7 +50,7 @@ public class TaskNodeService implements NodeService {
         //如果不为空，则为该treeCache添加监听器
         TreeCache treeCache = registryCenter.getTreeCache(taskNode.getRootNodePath());
         if (treeCache != null)
-            treeCache.getListenable().addListener(new TaskNodeListener(registryCenter));
+            treeCache.getListenable().addListener(new TaskNodeListener(registryCenter, taskNode));
     }
 
     public void registerConnListener() {

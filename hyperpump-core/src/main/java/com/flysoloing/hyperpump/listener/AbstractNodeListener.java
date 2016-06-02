@@ -1,5 +1,6 @@
 package com.flysoloing.hyperpump.listener;
 
+import com.flysoloing.hyperpump.base.Node;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -11,12 +12,15 @@ import org.apache.curator.framework.recipes.cache.TreeCacheListener;
  * @author laitao
  * @since 2016-05-23 00:56:07
  */
-public abstract class AbstractNodeListener implements TreeCacheListener {
+public abstract class AbstractNodeListener<T extends Node> implements TreeCacheListener {
 
     private RegistryCenter registryCenter;
 
-    public AbstractNodeListener(RegistryCenter registryCenter) {
+    private T node;
+
+    public AbstractNodeListener(RegistryCenter registryCenter, T node) {
         this.registryCenter = registryCenter;
+        this.node = node;
     }
 
     public void childEvent(CuratorFramework client, TreeCacheEvent event) throws Exception {
@@ -24,10 +28,8 @@ public abstract class AbstractNodeListener implements TreeCacheListener {
         if (path.isEmpty()) {
             return;
         }
-        dataChanged(registryCenter, event, path);
+        dataChanged(registryCenter, node, event, path);
     }
-
-//    protected abstract void dataChanged(CuratorFramework client, TreeCacheEvent event, String path);
 
     /**
      * 数据变化后处理方法
@@ -36,5 +38,5 @@ public abstract class AbstractNodeListener implements TreeCacheListener {
      * @param event 事件
      * @param path 路径
      */
-    protected abstract void dataChanged(RegistryCenter registryCenter, TreeCacheEvent event, String path);
+    protected abstract void dataChanged(RegistryCenter registryCenter, T node, TreeCacheEvent event, String path);
 }
