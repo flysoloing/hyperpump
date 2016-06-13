@@ -6,7 +6,18 @@ package com.flysoloing.hyperpump.common;
  */
 public enum TaskStatus {
 
-    READY("ready"), RUNNING("running"), COMPLETED("completed");
+    /**
+     * 待执行
+     */
+    READY("ready"),
+    /**
+     * 运行中
+     */
+    RUNNING("running"),
+    /**
+     * 已完成
+     */
+    COMPLETED("completed");
 
     private String status;
 

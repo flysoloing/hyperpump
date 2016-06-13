@@ -1,6 +1,7 @@
 package com.flysoloing.hyperpump.executor;
 
 import com.flysoloing.hyperpump.base.Node;
+import com.flysoloing.hyperpump.common.Constants;
 import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
@@ -8,6 +9,8 @@ import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.charset.Charset;
 
 /**
  * 执行器节点监听器
@@ -32,7 +35,7 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
             logger.info("Executor Node Listener Receive event: "
                     + "type=" + event.getType()
                     + ", path=" + data.getPath()
-                    + ", data=" + new String(data.getData())
+                    + ", data=" + new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8))
                     + ", stat=" + data.getStat());
         }
     }

@@ -6,7 +6,14 @@ package com.flysoloing.hyperpump.common;
  */
 public enum NodeStatus {
 
-    NORMAL("normal"), DISABLED("disabled");
+    /**
+     * 正常
+     */
+    NORMAL("normal"),
+    /**
+     * 不可用
+     */
+    DISABLED("disabled");
 
     private String status;
 

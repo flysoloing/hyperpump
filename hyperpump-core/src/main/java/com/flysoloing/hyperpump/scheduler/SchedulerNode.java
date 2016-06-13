@@ -21,17 +21,20 @@ public class SchedulerNode implements Node {
 //        |---taskList
 //        |---|---taskName
 //        |---|---|---taskClass：任务类
+//        |---|---|---taskType：任务类型
 //        |---|---|---batchNo：任务批次号
-//        |---|---|---taskStatus：任务状态
+//        |---|---|---taskStatus：任务状态，待执行/运行中/已完成
 //        |---|---taskName
 //        |---|---|---taskClass：任务类
+//        |---|---|---taskType：任务类型
 //        |---|---|---batchNo：任务批次号
-//        |---|---|---taskStatus：任务状态
+//        |---|---|---taskStatus：任务状态，待执行/运行中/已完成
 //        |---|---taskName
 //        |---|---|---taskClass：任务类
+//        |---|---|---taskType：任务类型
 //        |---|---|---batchNo：任务批次号
-//        |---|---|---taskStatus：任务状态
-//        |---status：状态，有效/无效
+//        |---|---|---taskStatus：任务状态，待执行/运行中/已完成
+//        |---nodeStatus：节点状态，正常/无效
 //        |---
 //        |---
 
@@ -53,11 +56,13 @@ public class SchedulerNode implements Node {
 
     private String taskClassNodeName = "taskClass";
 
+    private String taskTypeNodeName = "taskType";
+
     private String batchNoNodeName = "batchNo";
 
     private String taskStatusNodeName = "taskStatus";
 
-    private String statusNodeName = "status";
+    private String nodeStatusNodeName = "nodeStatus";
 
     public SchedulerNode(SchedulerNodeConf schedulerNodeConf) {
         this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_SCHEDULER, schedulerNodeConf.getIp(), schedulerNodeConf.getPid(), schedulerNodeConf.getObjName());
@@ -92,14 +97,19 @@ public class SchedulerNode implements Node {
         return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskNameNodeName);
     }
 
-    public String getBatchNoNodePath(String taskName) {
-        taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, batchNoNodeName);
-    }
-
     public String getTaskClassNodePath(String taskName) {
         taskNameNodeName = taskName;
         return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, taskClassNodeName);
+    }
+
+    public String getTaskTypeNodePath(String taskName) {
+        taskNameNodeName = taskName;
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, taskTypeNodeName);
+    }
+
+    public String getBatchNoNodePath(String taskName) {
+        taskNameNodeName = taskName;
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, batchNoNodeName);
     }
 
     public String getTaskStatusNodePath(String taskName) {
@@ -107,8 +117,8 @@ public class SchedulerNode implements Node {
         return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, taskStatusNodeName);
     }
 
-    public String getStatusNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, statusNodeName);
+    public String getNodeStatusNodePath() {
+        return HPNodeUtils.getPath(namespace, rootNodeName, nodeStatusNodeName);
     }
 
 }
