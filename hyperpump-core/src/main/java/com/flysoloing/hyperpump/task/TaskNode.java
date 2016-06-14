@@ -19,7 +19,8 @@ public class TaskNode implements Node {
 //        |---cron：cron表达式
 //        |---description：描述
 //        |---batchNo：任务批次号
-//        |---status：状态，有效/无效
+//        |---taskStatus：任务状态，待执行/运行中/已完成
+//        |---nodeStatus：节点状态，正常/无效
 //        |---
 //        |---
 
@@ -37,7 +38,9 @@ public class TaskNode implements Node {
 
     private String batchNoNodeName = "batchNo";
 
-    private String statusNodeName = "status";
+    private String taskStatusNodeName = "taskStatus";
+
+    private String nodeStatusNodeName = "nodeStatus";
 
     public TaskNode(TaskNodeConf taskNodeConf) {
         this.rootNodeName = Joiner.on(Constants.SEPARATOR_UNDERLINE).join(Constants.NODE_PREFIX_TASK, taskNodeConf.getTaskName());
@@ -67,7 +70,12 @@ public class TaskNode implements Node {
         return HPNodeUtils.getPath(namespace, rootNodeName, batchNoNodeName);
     }
 
-    public String getStatusNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, statusNodeName);
+    public String getTaskStatusNodePath() {
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskStatusNodeName);
     }
+
+    public String getNodeStatusNodePath() {
+        return HPNodeUtils.getPath(namespace, rootNodeName, nodeStatusNodeName);
+    }
+
 }

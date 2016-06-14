@@ -18,12 +18,13 @@ public class ExecutorNode implements Node {
 //        |---pid：端口号
 //        |---objName：对象名
 //        |---description：描述
-//        |---taskName：任务名
-//        |---|---taskClass：任务类
-//        |---|---taskType：任务类型
-//        |---|---batchNo：批次号
-//        |---|---offset：偏移量？待定
-//        |---|---taskStatus：任务状态，待执行/运行中/已完成
+//        |---taskArea：任务区
+//        |---|---taskName：任务名
+//        |---|---|---taskClass：任务类
+//        |---|---|---taskType：任务类型
+//        |---|---|---batchNo：批次号
+//        |---|---|---offset：偏移量？待定
+//        |---|---|---taskStatus：任务状态，待执行/运行中/已完成
 //        |---nodeStatus：节点状态，正常/无效
 //        |---
 //        |---
@@ -40,7 +41,9 @@ public class ExecutorNode implements Node {
 
     private String descriptionNodeName = "description";
 
-    private String taskNameNodeName = "taskName";
+    private String taskAreaNodeName = "taskArea";
+
+    private String taskNameNodeName;
 
     private String taskClassNodeName = "taskClass";
 
@@ -78,28 +81,38 @@ public class ExecutorNode implements Node {
         return HPNodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
     }
 
-    public String getTaskNameNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskNameNodeName);
+    public String getTaskAreaNodePath() {
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName);
     }
 
-    public String getTaskClassNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskClassNodeName);
+    public String getTaskNameNodePath(String taskName) {
+        taskNameNodeName = taskName;
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName);
     }
 
-    public String getTaskTypeNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskTypeNodeName);
+    public String getTaskClassNodePath(String taskName) {
+        taskNameNodeName = taskName;
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskClassNodeName);
     }
 
-    public String getBatchNoNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, batchNoNodeName);
+    public String getTaskTypeNodePath(String taskName) {
+        taskNameNodeName = taskName;
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskTypeNodeName);
     }
 
-    public String getOffsetNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, offsetNodeName);
+    public String getBatchNoNodePath(String taskName) {
+        taskNameNodeName = taskName;
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, batchNoNodeName);
     }
 
-    public String getTaskStatusNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskStatusNodeName);
+    public String getOffsetNodePath(String taskName) {
+        taskNameNodeName = taskName;
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, offsetNodeName);
+    }
+
+    public String getTaskStatusNodePath(String taskName) {
+        taskNameNodeName = taskName;
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskStatusNodeName);
     }
 
     public String getNodeStatusNodePath() {

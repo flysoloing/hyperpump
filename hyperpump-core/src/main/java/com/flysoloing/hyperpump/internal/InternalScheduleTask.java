@@ -24,6 +24,8 @@ public class InternalScheduleTask implements Job {
 
     private static final Logger logger = LoggerFactory.getLogger(InternalScheduleTask.class);
 
+    private static final int DEFAULT_LOCK_ACQUIRE_TIME_MS = 2 * 1000;
+
     private RegistryCenter registryCenter;
 
     private TaskNode taskNode;
@@ -32,12 +34,12 @@ public class InternalScheduleTask implements Job {
         //1、试图获取锁，如果能获取锁，则往下进行，否则退出并释放锁
         //2、获取TaskNode节点的status状态，若节点是运行状态，则退出并释放锁；否则往下进行
         //3、开启事务，将TaskNode节点的status状态修改为运行中，同时将batchNo加1后更新，然后提交。完成后释放锁
-        InterProcessMutex lock = new InterProcessMutex(registryCenter.getCuratorFramework(), taskNode.getStatusNodePath());
+        InterProcessMutex lock = new InterProcessMutex(registryCenter.getCuratorFramework(), taskNode.getTaskStatusNodePath());
         try {
-            if (lock.acquire(2000, TimeUnit.MILLISECONDS)) {
+            if (lock.acquire(DEFAULT_LOCK_ACQUIRE_TIME_MS, TimeUnit.MILLISECONDS)) {
                 try {
                     logger.info("已获取锁");
-                    String status = registryCenter.get(taskNode.getStatusNodePath());
+                    String status = registryCenter.get(taskNode.getTaskStatusNodePath());
                     logger.info("当前TaskNode节点状态：{}", status);
                     if (status != null && status.equals(TaskStatus.READY.getStatus())) {
                         String batchNo = registryCenter.get(taskNode.getBatchNoNodePath());
@@ -47,7 +49,7 @@ public class InternalScheduleTask implements Job {
                         logger.info("当前TaskNode节点batchNo修改后：{}", batchNo);
                         //TODO 需要开通事务同步更新
                         registryCenter.update(taskNode.getBatchNoNodePath(), String.valueOf(batchNo));
-                        registryCenter.update(taskNode.getStatusNodePath(), TaskStatus.RUNNING.getStatus());
+                        registryCenter.update(taskNode.getTaskStatusNodePath(), TaskStatus.RUNNING.getStatus());
                     }
                 } finally {
                     lock.release();

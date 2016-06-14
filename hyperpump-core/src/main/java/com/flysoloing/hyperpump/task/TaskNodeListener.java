@@ -35,7 +35,7 @@ public class TaskNodeListener extends AbstractNodeListener<TaskNode> {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
             logger.info("The 'TaskNodeListener' received event, type = {}, path = {}, value = {}", type, path, value);
 
-            if (path.equals(taskNode.getStatusNodePath()) && type == TreeCacheEvent.Type.NODE_UPDATED && value.equals(TaskStatus.RUNNING.getStatus())) {
+            if (path.equals(taskNode.getTaskStatusNodePath()) && type == TreeCacheEvent.Type.NODE_UPDATED && value.equals(TaskStatus.RUNNING.getStatus())) {
                 //如果type=NODE_UPDATED, path=/TASKS/TASK_hptasktest/status, data=running
                 //获取所有的状态为正常的SchedulerNode列表，依据任务类型和策略，选择一个或多个SchedulerNode
                 logger.info("got it, do whatever u want to do");

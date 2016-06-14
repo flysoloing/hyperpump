@@ -10,11 +10,15 @@ import com.flysoloing.hyperpump.util.LocalhostUtils;
  */
 public class SchedulerNodeConf {
 
+    private static final int DEFAULT_QUEUE_CAPACITY = 10;
+
     private String ip;
 
     private String pid;
 
     private String objName;
+
+    private int queueCapacity = DEFAULT_QUEUE_CAPACITY;
 
     private String description;
 
@@ -23,8 +27,13 @@ public class SchedulerNodeConf {
         this.objName = objName;
     }
 
-    public SchedulerNodeConf(String objName, String description) {
+    public SchedulerNodeConf(String objName, int queueCapacity) {
         this(objName);
+        this.queueCapacity = queueCapacity;
+    }
+
+    public SchedulerNodeConf(String objName, int queueCapacity, String description) {
+        this(objName, queueCapacity);
         this.description = description;
     }
 
@@ -50,6 +59,14 @@ public class SchedulerNodeConf {
 
     public void setObjName(String objName) {
         this.objName = objName;
+    }
+
+    public int getQueueCapacity() {
+        return queueCapacity;
+    }
+
+    public void setQueueCapacity(int queueCapacity) {
+        this.queueCapacity = queueCapacity;
     }
 
     public String getDescription() {

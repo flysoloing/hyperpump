@@ -18,7 +18,8 @@ public class SchedulerNode implements Node {
 //        |---pid：端口号
 //        |---objName：对象名
 //        |---description：描述
-//        |---taskList
+//        |---queueCapacity：列表容量
+//        |---taskQueue：任务队列
 //        |---|---taskName
 //        |---|---|---taskClass：任务类
 //        |---|---|---taskType：任务类型
@@ -50,7 +51,9 @@ public class SchedulerNode implements Node {
 
     private String descriptionNodeName = "description";
 
-    private String taskListNodeName = "taskList";
+    private String queueCapacityNodeName = "queueCapacity";
+
+    private String taskQueueNodeName = "taskQueue";
 
     private String taskNameNodeName;
 
@@ -88,33 +91,37 @@ public class SchedulerNode implements Node {
         return HPNodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
     }
 
-    public String getTaskListNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName);
+    public String getQueueCapacityNodePath() {
+        return HPNodeUtils.getPath(namespace, rootNodeName, queueCapacityNodeName);
+    }
+
+    public String getTaskQueueNodePath() {
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskQueueNodeName);
     }
 
     public String getTaskNameNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskNameNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskQueueNodeName, taskName);
     }
 
     public String getTaskClassNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, taskClassNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskQueueNodeName, taskName, taskClassNodeName);
     }
 
     public String getTaskTypeNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, taskTypeNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskQueueNodeName, taskName, taskTypeNodeName);
     }
 
     public String getBatchNoNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, batchNoNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskQueueNodeName, taskName, batchNoNodeName);
     }
 
     public String getTaskStatusNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskListNodeName, taskName, taskStatusNodeName);
+        return HPNodeUtils.getPath(namespace, rootNodeName, taskQueueNodeName, taskName, taskStatusNodeName);
     }
 
     public String getNodeStatusNodePath() {
