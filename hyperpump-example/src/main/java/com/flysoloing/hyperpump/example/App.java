@@ -1,4 +1,4 @@
-package com.flysoloing.hyperpump;
+package com.flysoloing.hyperpump.example;
 
 import com.flysoloing.hyperpump.base.AbstractBaseTask;
 import com.flysoloing.hyperpump.executor.ExecutorNodeConf;

@@ -19,13 +19,13 @@ public class TaskNodeConf {
     private String description;
 
     public TaskNodeConf(String taskName, Class<? extends Job> taskClass, String cron) {
-        this.taskName = taskName;
-        this.taskClass = taskClass;
-        this.cron = cron;
+        this(taskName, taskClass, cron, "");
     }
 
     public TaskNodeConf(String taskName, Class<? extends Job> taskClass, String cron, String description) {
-        this(taskName, taskClass, cron);
+        this.taskName = taskName;
+        this.taskClass = taskClass;
+        this.cron = cron;
         this.description = description;
     }
 

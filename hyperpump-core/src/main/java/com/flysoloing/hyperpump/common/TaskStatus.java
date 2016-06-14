@@ -1,6 +1,8 @@
 package com.flysoloing.hyperpump.common;
 
 /**
+ * 任务状态枚举
+ *
  * @author laitao
  * @since 2016-05-23 22:32:38
  */

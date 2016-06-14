@@ -60,11 +60,7 @@ public class RegistryCenterConf {
      * @param maxSleepMs 最大重试间隔时间
      */
     public RegistryCenterConf(String connectString, String namespace, int baseSleepTimeMs, int maxRetries, int maxSleepMs) {
-        this.connectString = connectString;
-        this.namespace = namespace;
-        this.baseSleepTimeMs = baseSleepTimeMs;
-        this.maxRetries = maxRetries;
-        this.maxSleepMs = maxSleepMs;
+        this(connectString, namespace, baseSleepTimeMs, maxRetries, maxSleepMs, DEFAULT_CONNECTION_TIMEOUT_MS, DEFAULT_SESSION_TIMEOUT_MS);
     }
 
     /**
@@ -79,7 +75,11 @@ public class RegistryCenterConf {
      * @param sessionTimeoutMs 会话超时时间
      */
     public RegistryCenterConf(String connectString, String namespace, int baseSleepTimeMs, int maxRetries, int maxSleepMs, int connectionTimeoutMs, int sessionTimeoutMs) {
-        this(connectString, namespace, baseSleepTimeMs, maxRetries, maxSleepMs);
+        this.connectString = connectString;
+        this.namespace = namespace;
+        this.baseSleepTimeMs = baseSleepTimeMs;
+        this.maxRetries = maxRetries;
+        this.maxSleepMs = maxSleepMs;
         this.connectionTimeoutMs = connectionTimeoutMs;
         this.sessionTimeoutMs = sessionTimeoutMs;
     }

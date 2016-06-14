@@ -19,17 +19,18 @@ public class ExecutorNodeConf {
     private String description;
 
     public ExecutorNodeConf(String objName) {
-//        this.objName = this.getClass().getSimpleName();
-        this.objName = objName;
+        this(objName, "");
     }
 
     public ExecutorNodeConf(String objName, String description) {
-        this(objName);
+        this.ip = LocalhostUtils.getIp();
+        this.pid = LocalhostUtils.getPid();
+        this.objName = objName;
         this.description = description;
     }
 
     public String getIp() {
-        return LocalhostUtils.getIp();
+        return ip;
     }
 
     public void setIp(String ip) {
@@ -37,7 +38,7 @@ public class ExecutorNodeConf {
     }
 
     public String getPid() {
-        return LocalhostUtils.getPid();
+        return pid;
     }
 
     public void setPid(String pid) {

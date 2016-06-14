@@ -1,6 +1,7 @@
 package com.flysoloing.hyperpump.scheduler;
 
 import com.flysoloing.hyperpump.base.NodeService;
+import com.flysoloing.hyperpump.common.NodeStatus;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.slf4j.Logger;
@@ -36,10 +37,13 @@ public class SchedulerNodeService implements NodeService {
 
     public void registerNodeInfo() {
         if (!registryCenter.isExisted(schedulerNode.getRootNodePath())) {
-            //TODO
             registryCenter.persist(schedulerNode.getIpNodePath(), schedulerNodeConf.getIp());
             registryCenter.persist(schedulerNode.getPidNodePath(), schedulerNodeConf.getPid());
             registryCenter.persist(schedulerNode.getObjNameNodePath(), schedulerNodeConf.getObjName());
+            registryCenter.persist(schedulerNode.getDescriptionNodePath(), schedulerNodeConf.getDescription());
+            registryCenter.persist(schedulerNode.getQueueCapacityNodePath(), String.valueOf(schedulerNodeConf.getQueueCapacity()));
+            registryCenter.persist(schedulerNode.getTaskQueueNodePath(), "");
+            registryCenter.persist(schedulerNode.getNodeStatusNodePath(), NodeStatus.NORMAL.getStatus());
         }
     }
 

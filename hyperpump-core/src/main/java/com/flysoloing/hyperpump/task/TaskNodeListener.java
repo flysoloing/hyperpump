@@ -43,8 +43,11 @@ public class TaskNodeListener extends AbstractNodeListener<TaskNode> {
                 //根据特定策略选择一个SchedulerNode
                 //尝试获取这个SchedulerNode的锁，并执行往其taskList节点增加新任务
                 //TODO
-                for (String str : children) {
-                    logger.info("child path: {}", str);
+                String schedulerNodePath = children.get(0);
+                SchedulerNode schedulerNode = HPNodeUtils.restoreSchedulerNode(schedulerNodePath);
+                if (schedulerNode != null) {
+                    //TODO
+//                    registryCenter.persist(schedulerNode.getTaskNameNodePath(""), "");
                 }
             }
         }

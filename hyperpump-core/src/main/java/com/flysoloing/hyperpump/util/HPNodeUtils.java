@@ -1,5 +1,16 @@
 package com.flysoloing.hyperpump.util;
 
+import com.flysoloing.hyperpump.common.Constants;
+import com.flysoloing.hyperpump.executor.ExecutorNode;
+import com.flysoloing.hyperpump.executor.ExecutorNodeConf;
+import com.flysoloing.hyperpump.scheduler.SchedulerNode;
+import com.flysoloing.hyperpump.scheduler.SchedulerNodeConf;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
+
 /**
  * @author laitao
  * @since 2016-05-13 00:50:00
@@ -79,6 +90,42 @@ public class HPNodeUtils {
             return String.format("%019d", 1L);
         batchNo += 1L;
         return String.format("%019d", batchNo);
+    }
+
+    /**
+     * 根据SchedulerNode节点名称恢复一个SchedulerNode对象
+     *
+     * @param schedulerNodePath SchedulerNode节点路径
+     * @return SchedulerNode对象
+     */
+    public static SchedulerNode restoreSchedulerNode(String schedulerNodePath) {
+        if (StringUtils.isBlank(schedulerNodePath))
+            return null;
+        List<String> list = Splitter.on(Constants.SEPARATOR_UNDERLINE).splitToList(schedulerNodePath);
+        if (list.isEmpty())
+            return null;
+        SchedulerNodeConf schedulerNodeConf = new SchedulerNodeConf(list.get(3));
+        schedulerNodeConf.setIp(list.get(1));
+        schedulerNodeConf.setPid(list.get(2));
+        return new SchedulerNode(schedulerNodeConf);
+    }
+
+    /**
+     * 根据ExecutorNode节点名称恢复一个ExecutorNode对象
+     *
+     * @param executorNodePath ExecutorNode节点路径
+     * @return ExecutorNode对象
+     */
+    public static ExecutorNode restoreExecutorNode(String executorNodePath) {
+        if (StringUtils.isBlank(executorNodePath))
+            return null;
+        List<String> list = Splitter.on(Constants.SEPARATOR_UNDERLINE).splitToList(executorNodePath);
+        if (list.isEmpty())
+            return null;
+        ExecutorNodeConf executorNodeConf = new ExecutorNodeConf(list.get(3));
+        executorNodeConf.setIp(list.get(1));
+        executorNodeConf.setPid(list.get(2));
+        return new ExecutorNode(executorNodeConf);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.flysoloing.hyperpump.executor;
 
 import com.flysoloing.hyperpump.base.NodeService;
+import com.flysoloing.hyperpump.common.NodeStatus;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.slf4j.Logger;
@@ -36,10 +37,12 @@ public class ExecutorNodeService implements NodeService {
 
     public void registerNodeInfo() {
         if (!registryCenter.isExisted(executorNode.getRootNodePath())) {
-            //TODO
             registryCenter.persist(executorNode.getIpNodePath(), executorNodeConf.getIp());
             registryCenter.persist(executorNode.getPidNodePath(), executorNodeConf.getPid());
             registryCenter.persist(executorNode.getObjNameNodePath(), executorNodeConf.getObjName());
+            registryCenter.persist(executorNode.getDescriptionNodePath(), executorNodeConf.getDescription());
+            registryCenter.persist(executorNode.getTaskAreaNodePath(), "");
+            registryCenter.persist(executorNode.getNodeStatusNodePath(), NodeStatus.NORMAL.getStatus());
         }
     }
 
