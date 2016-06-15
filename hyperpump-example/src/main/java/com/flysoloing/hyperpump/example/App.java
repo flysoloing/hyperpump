@@ -21,7 +21,7 @@ public class App {
 
     private RegistryCenter registryCenter = new RegistryCenter(registryCenterConf);
 
-    private TaskNodeConf taskNodeConf = new TaskNodeConf("hptasktest01", AbstractBaseTask.class, "0/5 * * * * ?");
+    private TaskNodeConf taskNodeConf = new TaskNodeConf("taskNodeConf01", AbstractBaseTask.class, "0/5 * * * * ?");
 
     private SchedulerNodeConf schedulerNodeConf = new SchedulerNodeConf("schedulerNodeConf01");
 

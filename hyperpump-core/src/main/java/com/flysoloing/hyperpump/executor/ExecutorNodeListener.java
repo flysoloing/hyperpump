@@ -27,16 +27,25 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
     }
 
     protected void dataChanged(RegistryCenter registryCenter, ExecutorNode executorNode, TreeCacheEvent event, String path) {
-        //TODO
         ChildData data = event.getData();
-        if (data == null) {
-            logger.info("Executor Node Listener No data in event[" + event + "]");
-        } else {
-            logger.info("Executor Node Listener Receive event: "
-                    + "type=" + event.getType()
-                    + ", path=" + data.getPath()
-                    + ", data=" + new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8))
-                    + ", stat=" + data.getStat());
+        TreeCacheEvent.Type type = event.getType();
+        if (data != null) {
+            String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
+            logger.info("The executor node listener - '{}' received event, type = {}, path = {}, value = {}", executorNode.getRootNodePath(), type, path, value);
         }
+
+        //条件：type=NODE_ADDED, path=/EXECUTORS/EXECUTOR_${IP:PID:OBJ_NAME}/taskClass, data=com.flysoloing.hyperpump.base.AbstractBaseTask
+        executeTask();
+
+        //条件：type=NODE_REMOVED, path=/EXECUTORS/EXECUTOR_${IP:PID:OBJ_NAME}/taskClass, data=com.flysoloing.hyperpump.base.AbstractBaseTask
+        resetTaskStatus();
+    }
+
+    private void executeTask() {
+        //开始执行对应的TaskClass任务，任务执行完后回调更新ExecutorNode节点的状态
+    }
+
+    private void resetTaskStatus() {
+        //更新对应的SchedulerNode节点的任务状态为已完成（completed）
     }
 }
