@@ -18,6 +18,10 @@ public class TaskNodeConf {
 
     private String description;
 
+    public TaskNodeConf(String taskName) {
+        this(taskName, null, "", "");
+    }
+
     public TaskNodeConf(String taskName, Class<? extends Job> taskClass, String cron) {
         this(taskName, taskClass, cron, "");
     }

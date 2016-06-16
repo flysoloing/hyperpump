@@ -2,7 +2,7 @@ package com.flysoloing.hyperpump.executor;
 
 import com.flysoloing.hyperpump.base.Node;
 import com.flysoloing.hyperpump.common.Constants;
-import com.flysoloing.hyperpump.util.HPNodeUtils;
+import com.flysoloing.hyperpump.util.NodeUtils;
 import com.google.common.base.Joiner;
 
 /**
@@ -65,66 +65,66 @@ public class ExecutorNode implements Node {
     }
 
     public String getRootNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName);
     }
 
     public String getIpNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, ipNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, ipNodeName);
     }
 
     public String getPidNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, pidNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, pidNodeName);
     }
 
     public String getObjNameNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, objNameNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, objNameNodeName);
     }
 
     public String getDescriptionNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
     }
 
     public String getTaskAreaNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName);
     }
 
     public String getTaskNameNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName);
     }
 
     public String getTaskClassNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskClassNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskClassNodeName);
     }
 
     public String getTaskTypeNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskTypeNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskTypeNodeName);
     }
 
     public String getBatchNoNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, batchNoNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, batchNoNodeName);
     }
 
     public String getOffsetNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, offsetNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, offsetNodeName);
     }
 
     public String getTaskRefererNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskRefererNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskRefererNodeName);
     }
 
     public String getTaskStatusNodePath(String taskName) {
         taskNameNodeName = taskName;
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskStatusNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskAreaNodeName, taskName, taskStatusNodeName);
     }
 
     public String getNodeStatusNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, nodeStatusNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, nodeStatusNodeName);
     }
 
 }

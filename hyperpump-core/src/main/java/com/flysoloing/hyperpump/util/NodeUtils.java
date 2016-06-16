@@ -5,6 +5,8 @@ import com.flysoloing.hyperpump.executor.ExecutorNode;
 import com.flysoloing.hyperpump.executor.ExecutorNodeConf;
 import com.flysoloing.hyperpump.scheduler.SchedulerNode;
 import com.flysoloing.hyperpump.scheduler.SchedulerNodeConf;
+import com.flysoloing.hyperpump.task.TaskNode;
+import com.flysoloing.hyperpump.task.TaskNodeConf;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +19,7 @@ import java.util.regex.Pattern;
  * @author laitao
  * @since 2016-05-13 00:50:00
  */
-public class HPNodeUtils {
+public class NodeUtils {
 
     /**
      * 获取节点路径
@@ -94,6 +96,16 @@ public class HPNodeUtils {
         return String.format("%019d", batchNo);
     }
 
+    public static TaskNode restoreTaskNode(String taskName) {
+        if (StringUtils.isBlank(taskName))
+            return null;
+        List<String> list = Splitter.on(Constants.SEPARATOR_UNDERLINE).splitToList(taskName);
+        if (list.isEmpty())
+            return null;
+        TaskNodeConf taskNodeConf = new TaskNodeConf(list.get(1));
+        return new TaskNode(taskNodeConf);
+    }
+
     /**
      * 根据SchedulerNode节点名称恢复一个SchedulerNode对象
      *
@@ -136,15 +148,19 @@ public class HPNodeUtils {
      * @param path event路径
      * @return taskName字段
      */
-    public static String parseTaskName(String path) {
-        //TODO
-        String regEx = "/SCHEDULERS/SCHEDULER_.*/taskQueue/TASK_.*/taskStatus";
-        Pattern pattern = Pattern.compile(regEx);
-        Matcher matcher = pattern.matcher(path);
-        if(matcher.matches()) {
-            return matcher.group(1);
+    public static String parseTaskNodeName(String path) {
+//        正则实现
+//        String regEx = "/TASK_(.+?)/";
+//        Pattern pattern = Pattern.compile(regEx);
+//        Matcher matcher = pattern.matcher(path);
+//        if (matcher.find()) {
+//            return matcher.group();
+//        }
+        List<String> list = Splitter.on(Constants.SEPARATOR_SLASH).splitToList(path);
+        for (String str : list) {
+            if (str.startsWith(Constants.NODE_PREFIX_TASK + Constants.SEPARATOR_UNDERLINE))
+                return str;
         }
         return null;
     }
-
 }

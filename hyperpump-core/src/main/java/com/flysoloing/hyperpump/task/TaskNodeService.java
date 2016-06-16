@@ -4,7 +4,7 @@ import com.flysoloing.hyperpump.base.NodeService;
 import com.flysoloing.hyperpump.common.NodeStatus;
 import com.flysoloing.hyperpump.common.TaskStatus;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
-import com.flysoloing.hyperpump.util.HPNodeUtils;
+import com.flysoloing.hyperpump.util.NodeUtils;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class TaskNodeService implements NodeService {
             registryCenter.persist(taskNode.getCronNodePath(), taskNodeConf.getCron());
             registryCenter.persist(taskNode.getDescriptionNodePath(), taskNodeConf.getDescription());
             registryCenter.persist(taskNode.getTaskTypeNodePath(), "");
-            registryCenter.persist(taskNode.getBatchNoNodePath(), HPNodeUtils.incrBatchNo(0L));  //格式化，如：0000000000000000001
+            registryCenter.persist(taskNode.getBatchNoNodePath(), NodeUtils.incrBatchNo(0L));  //格式化，如：0000000000000000001
             registryCenter.persist(taskNode.getTaskStatusNodePath(), TaskStatus.READY.getStatus());
             registryCenter.persist(taskNode.getNodeStatusNodePath(), NodeStatus.NORMAL.getStatus());
         }

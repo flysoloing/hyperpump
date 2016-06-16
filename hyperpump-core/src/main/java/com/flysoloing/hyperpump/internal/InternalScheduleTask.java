@@ -4,7 +4,7 @@ import com.flysoloing.hyperpump.common.TaskStatus;
 import com.flysoloing.hyperpump.exception.HPExceptionHandler;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import com.flysoloing.hyperpump.task.TaskNode;
-import com.flysoloing.hyperpump.util.HPNodeUtils;
+import com.flysoloing.hyperpump.util.NodeUtils;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -45,7 +45,7 @@ public class InternalScheduleTask implements Job {
                         String batchNo = registryCenter.get(taskNode.getBatchNoNodePath());
                         logger.info("当前TaskNode节点batchNo：{}", batchNo);
                         Long longBatchNo = Long.valueOf(batchNo);
-                        batchNo = HPNodeUtils.incrBatchNo(longBatchNo);
+                        batchNo = NodeUtils.incrBatchNo(longBatchNo);
                         logger.info("当前TaskNode节点batchNo修改后：{}", batchNo);
                         //TODO 需要开通事务同步更新
                         registryCenter.update(taskNode.getBatchNoNodePath(), String.valueOf(batchNo));

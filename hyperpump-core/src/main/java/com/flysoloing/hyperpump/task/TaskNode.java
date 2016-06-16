@@ -2,7 +2,7 @@ package com.flysoloing.hyperpump.task;
 
 import com.flysoloing.hyperpump.base.Node;
 import com.flysoloing.hyperpump.common.Constants;
-import com.flysoloing.hyperpump.util.HPNodeUtils;
+import com.flysoloing.hyperpump.util.NodeUtils;
 import com.google.common.base.Joiner;
 
 /**
@@ -47,35 +47,35 @@ public class TaskNode implements Node {
     }
 
     public String getRootNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName);
     }
 
     public String getTaskClassNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskClassNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskClassNodeName);
     }
 
     public String getTaskTypeNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskTypeNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskTypeNodeName);
     }
 
     public String getCronNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, cronNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, cronNodeName);
     }
 
     public String getDescriptionNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, descriptionNodeName);
     }
 
     public String getBatchNoNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, batchNoNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, batchNoNodeName);
     }
 
     public String getTaskStatusNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, taskStatusNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, taskStatusNodeName);
     }
 
     public String getNodeStatusNodePath() {
-        return HPNodeUtils.getPath(namespace, rootNodeName, nodeStatusNodeName);
+        return NodeUtils.getPath(namespace, rootNodeName, nodeStatusNodeName);
     }
 
 }
