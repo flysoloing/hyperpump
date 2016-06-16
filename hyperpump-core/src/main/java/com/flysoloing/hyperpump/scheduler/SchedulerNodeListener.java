@@ -5,6 +5,8 @@ import com.flysoloing.hyperpump.common.Constants;
 import com.flysoloing.hyperpump.common.TaskStatus;
 import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
+import com.flysoloing.hyperpump.util.HPNodeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -12,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 调度器节点监听器
@@ -34,22 +38,34 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
             logger.info("The scheduler node listener - '{}' received event, type = {}, path = {}, value = {}", schedulerNode.getRootNodePath(), type, path, value);
 
-            //条件：type = NODE_ADDED, path = /SCHEDULERS/SCHEDULER_${IP:PID:OBJ_NAME}/taskQueue/TASK_${taskName}/taskStatus, value = running
-            //通过正则表达式来匹配path
-//            if (path.equals(schedulerNode.getTaskStatusNodePath()) && type == TreeCacheEvent.Type.NODE_UPDATED && value.equals(TaskStatus.RUNNING.getStatus())) {
-                executorNodeDispatch();
-//            }
+            String taskName = StringUtils.isBlank(path) ? "" : HPNodeUtils.parseTaskName(path);
 
-            //type = NODE_ADDED, path = /SCHEDULERS/SCHEDULER_${IP:PID:OBJ_NAME}/taskQueue/TASK_${taskName}/taskStatus, value = completed
-            resetTaskStatus();
+            String regEx = "/SCHEDULERS/SCHEDULER_.*/taskQueue/TASK_.*/taskStatus";
+            Pattern pattern = Pattern.compile(regEx);
+            Matcher matcher = pattern.matcher(path);
+
+            //条件：type = NODE_ADDED, path = /SCHEDULERS/SCHEDULER_${IP:PID:OBJ_NAME}/taskQueue/TASK_${taskName}/taskStatus, value = running
+            if (matcher.matches() && type == TreeCacheEvent.Type.NODE_ADDED && value.equals(TaskStatus.RUNNING.getStatus())) {
+                dispatchExecutorNode();
+            }
+
+            //条件：type = NODE_ADDED, path = /SCHEDULERS/SCHEDULER_${IP:PID:OBJ_NAME}/taskQueue/TASK_${taskName}/taskStatus, value = completed
+            if (matcher.matches() && type == TreeCacheEvent.Type.NODE_ADDED && value.equals(TaskStatus.COMPLETED.getStatus())) {
+                resetTaskStatus();
+                clearTaskQueue();
+            }
         }
     }
 
-    private void executorNodeDispatch() {
+    private void dispatchExecutorNode() {
         //获取所有状态可用的ExecutorNode节点列表，依据具体的策略和任务类型进行任务分发，并将任务添加到选中的ExecutorNode子节点下
     }
 
     private void resetTaskStatus() {
         //更新对应的TaskNode节点的任务状态为已完成（completed）
+    }
+
+    private void clearTaskQueue() {
+        //清除任务队列里已完成的任务
     }
 }

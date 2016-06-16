@@ -1,5 +1,8 @@
 package com.flysoloing.hyperpump;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Hello world!
  *
@@ -41,5 +44,21 @@ public class App
         //28、
         //29、
         //30、
+
+        String path = "/SCHEDULERS/SCHEDULER_10.13.38.58_223800_schedulerNodeConf01/taskQueue/TASK_hptasktest01/taskStatus";
+        String regEx = "/SCHEDULERS/SCHEDULER_.*/taskQueue/TASK_.*/taskStatus";
+        long start = System.currentTimeMillis();
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher(path);
+        System.out.println(matcher.matches());
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+
+        for (int i = 0; i < 100; i++) {
+            long start1 = System.currentTimeMillis();
+            matcher.matches();
+            long end1 = System.currentTimeMillis();
+            System.out.println(end1 - start1);
+        }
     }
 }

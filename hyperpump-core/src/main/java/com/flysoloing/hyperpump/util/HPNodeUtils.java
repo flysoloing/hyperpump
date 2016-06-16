@@ -10,6 +10,8 @@ import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author laitao
@@ -95,13 +97,13 @@ public class HPNodeUtils {
     /**
      * 根据SchedulerNode节点名称恢复一个SchedulerNode对象
      *
-     * @param schedulerNodePath SchedulerNode节点路径
+     * @param rootNodePath SchedulerNode节点路径
      * @return SchedulerNode对象
      */
-    public static SchedulerNode restoreSchedulerNode(String schedulerNodePath) {
-        if (StringUtils.isBlank(schedulerNodePath))
+    public static SchedulerNode restoreSchedulerNode(String rootNodePath) {
+        if (StringUtils.isBlank(rootNodePath))
             return null;
-        List<String> list = Splitter.on(Constants.SEPARATOR_UNDERLINE).splitToList(schedulerNodePath);
+        List<String> list = Splitter.on(Constants.SEPARATOR_UNDERLINE).splitToList(rootNodePath);
         if (list.isEmpty())
             return null;
         SchedulerNodeConf schedulerNodeConf = new SchedulerNodeConf(list.get(3));
@@ -113,19 +115,36 @@ public class HPNodeUtils {
     /**
      * 根据ExecutorNode节点名称恢复一个ExecutorNode对象
      *
-     * @param executorNodePath ExecutorNode节点路径
+     * @param rootNodePath ExecutorNode节点路径
      * @return ExecutorNode对象
      */
-    public static ExecutorNode restoreExecutorNode(String executorNodePath) {
-        if (StringUtils.isBlank(executorNodePath))
+    public static ExecutorNode restoreExecutorNode(String rootNodePath) {
+        if (StringUtils.isBlank(rootNodePath))
             return null;
-        List<String> list = Splitter.on(Constants.SEPARATOR_UNDERLINE).splitToList(executorNodePath);
+        List<String> list = Splitter.on(Constants.SEPARATOR_UNDERLINE).splitToList(rootNodePath);
         if (list.isEmpty())
             return null;
         ExecutorNodeConf executorNodeConf = new ExecutorNodeConf(list.get(3));
         executorNodeConf.setIp(list.get(1));
         executorNodeConf.setPid(list.get(2));
         return new ExecutorNode(executorNodeConf);
+    }
+
+    /**
+     * 解析事件路径，并返回其中的taskName字段
+     *
+     * @param path event路径
+     * @return taskName字段
+     */
+    public static String parseTaskName(String path) {
+        //TODO
+        String regEx = "/SCHEDULERS/SCHEDULER_.*/taskQueue/TASK_.*/taskStatus";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher(path);
+        if(matcher.matches()) {
+            return matcher.group(1);
+        }
+        return null;
     }
 
 }
