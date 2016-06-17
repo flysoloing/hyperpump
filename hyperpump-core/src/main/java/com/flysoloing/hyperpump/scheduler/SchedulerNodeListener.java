@@ -2,6 +2,7 @@ package com.flysoloing.hyperpump.scheduler;
 
 import com.flysoloing.hyperpump.common.Constants;
 import com.flysoloing.hyperpump.common.TaskStatus;
+import com.flysoloing.hyperpump.executor.ExecutorNode;
 import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import com.flysoloing.hyperpump.task.TaskNode;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +39,7 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
             logger.info("The scheduler node listener - '{}' received event, type = {}, path = {}, value = {}", schedulerNode.getRootNodePath(), type, path, value);
 
-            String taskName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
+            String taskNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
 
             String regEx = "/SCHEDULERS/SCHEDULER_.*/taskQueue/TASK_.*/taskStatus";
             Pattern pattern = Pattern.compile(regEx);
@@ -45,35 +47,75 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
 
             //条件：type = NODE_ADDED, path = /SCHEDULERS/SCHEDULER_${IP:PID:OBJ_NAME}/taskQueue/TASK_${taskName}/taskStatus, value = running
             if (matcher.matches() && type == TreeCacheEvent.Type.NODE_ADDED && value.equals(TaskStatus.RUNNING.getStatus())) {
-                dispatchExecutorNode(taskName);
+                dispatchExecutorNode(registryCenter, schedulerNode, taskNodeName);
             }
 
             //条件：type = NODE_UPDATED, path = /SCHEDULERS/SCHEDULER_${IP:PID:OBJ_NAME}/taskQueue/TASK_${taskName}/taskStatus, value = completed
             if (matcher.matches() && type == TreeCacheEvent.Type.NODE_UPDATED && value.equals(TaskStatus.COMPLETED.getStatus())) {
-                resetTaskStatus(registryCenter, taskName);
-                clearTaskQueue(registryCenter, schedulerNode, taskName);
+                resetTaskStatus(registryCenter, taskNodeName);
+                clearTaskQueue(registryCenter, schedulerNode, taskNodeName);
             }
         }
     }
 
-    private void dispatchExecutorNode(String taskName) {
+    /**
+     * 将调度器节点持有的任务分发给执行器节点，可以根据不同的策略选择一个多多个执行器节点
+     *
+     * @param registryCenter 注册中心
+     * @param schedulerNode 调度器节点
+     * @param taskNodeName 任务节点名称
+     */
+    private void dispatchExecutorNode(RegistryCenter registryCenter, SchedulerNode schedulerNode, String taskNodeName) {
         //获取所有状态可用的ExecutorNode节点列表，依据具体的策略和任务类型进行任务分发，并将任务添加到选中的ExecutorNode子节点下
-        logger.info("dispatchExecutorNode() {}", taskName);
+        logger.info("dispatchExecutorNode() {}", taskNodeName);
         //TODO
+        List<String> children = registryCenter.getChildren(NodeUtils.getPath(Constants.NODE_NAMESPACE_EXECUTORS));
+
+        if (children.isEmpty()) {
+            return;
+        }
+
+        if (StringUtils.isBlank(taskNodeName)) {
+            return;
+        }
+
+        String executorNodeName = children.get(0);
+        ExecutorNode executorNode = NodeUtils.restoreExecutorNode(executorNodeName);
+
+        //尝试获取锁后再执行，避免并发情况下竞争
+        if (executorNode != null && !registryCenter.isExisted(executorNode.getTaskNameNodePath(taskNodeName))) {
+            registryCenter.persist(executorNode.getTaskClassNodePath(taskNodeName), schedulerNode.getTaskClassNodePath(taskNodeName));
+            registryCenter.persist(executorNode.getTaskTypeNodePath(taskNodeName), schedulerNode.getTaskTypeNodePath(taskNodeName));
+            registryCenter.persist(executorNode.getBatchNoNodePath(taskNodeName), schedulerNode.getBatchNoNodePath(taskNodeName));
+            registryCenter.persist(executorNode.getOffsetNodePath(taskNodeName), "");
+            registryCenter.persist(executorNode.getTaskRefererNodePath(taskNodeName), schedulerNode.getRootNodePath());
+            registryCenter.persist(executorNode.getTaskStatusNodePath(taskNodeName), TaskStatus.RUNNING.getStatus());
+        }
     }
 
-    private void resetTaskStatus(RegistryCenter registryCenter, String taskName) {
-        //更新对应的TaskNode节点的任务状态为已完成（completed）
-        logger.info("resetTaskStatus() {}", taskName);
-        TaskNode taskNode = NodeUtils.restoreTaskNode(taskName);
+    /**
+     * 更新对应的TaskNode节点的任务状态为已完成（completed）
+     *
+     * @param registryCenter 注册中心
+     * @param taskNodeName 任务节点名称
+     */
+    private void resetTaskStatus(RegistryCenter registryCenter, String taskNodeName) {
+        logger.info("resetTaskStatus() {}", taskNodeName);
+        TaskNode taskNode = NodeUtils.restoreTaskNode(taskNodeName);
         if (taskNode == null)
             return;
         registryCenter.update(taskNode.getTaskStatusNodePath(), TaskStatus.COMPLETED.getStatus());
     }
 
-    private void clearTaskQueue(RegistryCenter registryCenter, SchedulerNode schedulerNode, String taskName) {
-        //清除任务队列里已完成的任务
-        logger.info("clearTaskQueue() {}", taskName);
-        registryCenter.remove(schedulerNode.getTaskNameNodePath(taskName));
+    /**
+     * 清除任务队列里已完成（completed）的任务
+     *
+     * @param registryCenter 注册中心
+     * @param schedulerNode 调度器节点
+     * @param taskNodeName 任务节点名称
+     */
+    private void clearTaskQueue(RegistryCenter registryCenter, SchedulerNode schedulerNode, String taskNodeName) {
+        logger.info("clearTaskQueue() {}", taskNodeName);
+        registryCenter.remove(schedulerNode.getTaskNameNodePath(taskNodeName));
     }
 }

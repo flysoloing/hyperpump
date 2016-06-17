@@ -143,10 +143,10 @@ public class NodeUtils {
     }
 
     /**
-     * 解析事件路径，并返回其中的taskName字段
+     * 解析事件路径并返回其中的taskNodeName字段
      *
      * @param path event路径
-     * @return taskName字段
+     * @return taskNodeName字段
      */
     public static String parseTaskNodeName(String path) {
 //        正则实现
@@ -159,6 +159,36 @@ public class NodeUtils {
         List<String> list = Splitter.on(Constants.SEPARATOR_SLASH).splitToList(path);
         for (String str : list) {
             if (str.startsWith(Constants.NODE_PREFIX_TASK + Constants.SEPARATOR_UNDERLINE))
+                return str;
+        }
+        return null;
+    }
+
+    /**
+     * 解析事件路径并返回其中的schedulerNodeName字段
+     *
+     * @param path event路径
+     * @return schedulerNodeName字段
+     */
+    public static String parseSchedulerNodeName(String path) {
+        List<String> list = Splitter.on(Constants.SEPARATOR_SLASH).splitToList(path);
+        for (String str : list) {
+            if (str.startsWith(Constants.NODE_PREFIX_SCHEDULER + Constants.SEPARATOR_UNDERLINE))
+                return str;
+        }
+        return null;
+    }
+
+    /**
+     * 解析事件路径并返回其中的executorNodeName字段
+     *
+     * @param path event路径
+     * @return executorNodeName字段
+     */
+    public static String parseExecutorNodeName(String path) {
+        List<String> list = Splitter.on(Constants.SEPARATOR_SLASH).splitToList(path);
+        for (String str : list) {
+            if (str.startsWith(Constants.NODE_PREFIX_EXECUTOR+ Constants.SEPARATOR_UNDERLINE))
                 return str;
         }
         return null;

@@ -2,6 +2,7 @@ package com.flysoloing.hyperpump.executor;
 
 import com.flysoloing.hyperpump.common.Constants;
 import com.flysoloing.hyperpump.common.TaskStatus;
+import com.flysoloing.hyperpump.exception.HPExceptionHandler;
 import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import com.flysoloing.hyperpump.scheduler.SchedulerNode;
@@ -37,7 +38,7 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
             logger.info("The executor node listener - '{}' received event, type = {}, path = {}, value = {}", executorNode.getRootNodePath(), type, path, value);
 
-            String taskName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
+            String taskNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
 
             String regEx = "/EXECUTORS/EXECUTOR_.*/taskArea/TASK_.*/taskStatus";
             Pattern pattern = Pattern.compile(regEx);
@@ -45,36 +46,67 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
 
             //条件：type = NODE_ADDED, path = /EXECUTORS/EXECUTOR_${IP:PID:OBJ_NAME}/taskArea/TASK_${taskName}/taskStatus, value = running
             if (matcher.matches() && type == TreeCacheEvent.Type.NODE_ADDED && value.equals(TaskStatus.RUNNING.getStatus())) {
-                executeTaskClass(taskName);
+                executeTaskClass(registryCenter, executorNode, taskNodeName);
             }
 
             //条件：type = NODE_UPDATED, path = /EXECUTORS/EXECUTOR_${IP:PID:OBJ_NAME}/taskArea/TASK_${taskName}/taskStatus, value = completed
             if (matcher.matches() && type == TreeCacheEvent.Type.NODE_UPDATED && value.equals(TaskStatus.COMPLETED.getStatus())) {
-                resetTaskStatus(registryCenter, executorNode, taskName);
-                clearTaskArea(registryCenter, executorNode, taskName);
+                resetTaskStatus(registryCenter, executorNode, taskNodeName);
+                clearTaskArea(registryCenter, executorNode, taskNodeName);
             }
         }
     }
 
-    private void executeTaskClass(String taskName) {
+    /**
+     * 执行任务
+     *
+     * @param registryCenter 注册中心
+     * @param executorNode 执行器节点
+     * @param taskNodeName 任务节点名称
+     */
+    private void executeTaskClass(RegistryCenter registryCenter, ExecutorNode executorNode, String taskNodeName) {
         //开始执行对应的TaskClass任务，任务执行完后回调更新ExecutorNode节点的状态
-        logger.info("executeTaskClass() {}", taskName);
+        logger.info("executeTaskClass() {}", taskNodeName);
         //TODO
+        String taskClassName = registryCenter.get(executorNode.getTaskClassNodePath(taskNodeName));
+        if (StringUtils.isBlank(taskClassName)) {
+            logger.info("the task class is blank");
+            return;
+        }
+        try {
+            Class taskClass = Class.forName(taskClassName);
+            logger.info("execute task class - '{}'", taskClass.getCanonicalName());
+        } catch (ClassNotFoundException e) {
+            logger.error("", e);
+            HPExceptionHandler.handleException(e);
+        }
     }
 
-    private void resetTaskStatus(RegistryCenter registryCenter, ExecutorNode executorNode, String taskName) {
-        //更新对应的SchedulerNode节点的任务状态为已完成（completed）
-        logger.info("resetTaskStatus() {}", taskName);
-        String schedulerNodeName = registryCenter.get(executorNode.getTaskRefererNodePath(taskName));
+    /**
+     * 更新对应的SchedulerNode节点的任务状态为已完成（completed）
+     *
+     * @param registryCenter 注册中心
+     * @param executorNode 执行器节点
+     * @param taskNodeName 任务节点名称
+     */
+    private void resetTaskStatus(RegistryCenter registryCenter, ExecutorNode executorNode, String taskNodeName) {
+        logger.info("resetTaskStatus() {}", taskNodeName);
+        String schedulerNodeName = registryCenter.get(executorNode.getTaskRefererNodePath(taskNodeName));
         SchedulerNode schedulerNode = NodeUtils.restoreSchedulerNode(schedulerNodeName);
         if (schedulerNode == null)
             return;
-        registryCenter.update(schedulerNode.getTaskStatusNodePath(taskName), TaskStatus.COMPLETED.getStatus());
+        registryCenter.update(schedulerNode.getTaskStatusNodePath(taskNodeName), TaskStatus.COMPLETED.getStatus());
     }
 
-    private void clearTaskArea(RegistryCenter registryCenter, ExecutorNode executorNode, String taskName) {
-        //清除任务区里已完成的任务
-        logger.info("clearTaskArea() {}", taskName);
-        registryCenter.remove(executorNode.getTaskNameNodePath(taskName));
+    /**
+     * //清除任务区里已完成（completed）的任务
+     *
+     * @param registryCenter 注册中心
+     * @param executorNode 执行器节点
+     * @param taskNodeName 任务节点名称
+     */
+    private void clearTaskArea(RegistryCenter registryCenter, ExecutorNode executorNode, String taskNodeName) {
+        logger.info("clearTaskArea() {}", taskNodeName);
+        registryCenter.remove(executorNode.getTaskNameNodePath(taskNodeName));
     }
 }
