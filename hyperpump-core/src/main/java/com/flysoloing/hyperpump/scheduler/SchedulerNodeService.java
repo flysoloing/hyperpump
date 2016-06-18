@@ -1,6 +1,6 @@
 package com.flysoloing.hyperpump.scheduler;
 
-import com.flysoloing.hyperpump.base.NodeService;
+import com.flysoloing.hyperpump.node.NodeService;
 import com.flysoloing.hyperpump.common.NodeStatus;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import org.apache.curator.framework.recipes.cache.TreeCache;
@@ -33,6 +33,10 @@ public class SchedulerNodeService implements NodeService {
         registryCenter.addTreeCache(schedulerNode.getRootNodePath());
         registerNodeInfo();
         registerNodeListener();
+    }
+
+    public void clearDisabledNode() {
+        //TODO
     }
 
     public void registerNodeInfo() {

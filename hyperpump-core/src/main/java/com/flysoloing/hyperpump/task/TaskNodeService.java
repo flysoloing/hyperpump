@@ -1,6 +1,6 @@
 package com.flysoloing.hyperpump.task;
 
-import com.flysoloing.hyperpump.base.NodeService;
+import com.flysoloing.hyperpump.node.NodeService;
 import com.flysoloing.hyperpump.common.NodeStatus;
 import com.flysoloing.hyperpump.common.TaskStatus;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
@@ -35,6 +35,10 @@ public class TaskNodeService implements NodeService {
         registryCenter.addTreeCache(taskNode.getRootNodePath());
         registerNodeInfo();
         registerNodeListener();
+    }
+
+    public void clearDisabledNode() {
+        //TODO
     }
 
     public void registerNodeInfo() {

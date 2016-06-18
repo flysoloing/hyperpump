@@ -72,10 +72,11 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
         List<String> children = registryCenter.getChildren(NodeUtils.getPath(Constants.NODE_NAMESPACE_EXECUTORS));
 
         if (children.isEmpty()) {
+            logger.info("");
             return;
         }
-
         if (StringUtils.isBlank(taskNodeName)) {
+            logger.info("");
             return;
         }
 
@@ -84,11 +85,11 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
 
         //尝试获取锁后再执行，避免并发情况下竞争
         if (executorNode != null && !registryCenter.isExisted(executorNode.getTaskNameNodePath(taskNodeName))) {
-            registryCenter.persist(executorNode.getTaskClassNodePath(taskNodeName), schedulerNode.getTaskClassNodePath(taskNodeName));
-            registryCenter.persist(executorNode.getTaskTypeNodePath(taskNodeName), schedulerNode.getTaskTypeNodePath(taskNodeName));
-            registryCenter.persist(executorNode.getBatchNoNodePath(taskNodeName), schedulerNode.getBatchNoNodePath(taskNodeName));
+            registryCenter.persist(executorNode.getTaskClassNodePath(taskNodeName), registryCenter.get(schedulerNode.getTaskClassNodePath(taskNodeName)));
+            registryCenter.persist(executorNode.getTaskTypeNodePath(taskNodeName), registryCenter.get(schedulerNode.getTaskTypeNodePath(taskNodeName)));
+            registryCenter.persist(executorNode.getBatchNoNodePath(taskNodeName), registryCenter.get(schedulerNode.getBatchNoNodePath(taskNodeName)));
             registryCenter.persist(executorNode.getOffsetNodePath(taskNodeName), "");
-            registryCenter.persist(executorNode.getTaskRefererNodePath(taskNodeName), schedulerNode.getRootNodePath());
+            registryCenter.persist(executorNode.getTaskRefererNodePath(taskNodeName), NodeUtils.parseSchedulerNodeName(schedulerNode.getRootNodePath()));
             registryCenter.persist(executorNode.getTaskStatusNodePath(taskNodeName), TaskStatus.RUNNING.getStatus());
         }
     }

@@ -13,6 +13,8 @@ import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,8 +78,23 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
         try {
             Class taskClass = Class.forName(taskClassName);
             logger.info("execute task class - '{}'", taskClass.getCanonicalName());
+            //TODO 通过反射方式执行，两种方式：类似Spring的ReflectUtils工具类和Guava的Reflection工具类
+            Constructor constructor = taskClass.getConstructor();
+            Object obj = constructor.newInstance();
         } catch (ClassNotFoundException e) {
-            logger.error("", e);
+            logger.error("ClassNotFoundException", e);
+            HPExceptionHandler.handleException(e);
+        } catch (NoSuchMethodException e) {
+            logger.error("NoSuchMethodException", e);
+            HPExceptionHandler.handleException(e);
+        } catch (InvocationTargetException e) {
+            logger.error("InvocationTargetException", e);
+            HPExceptionHandler.handleException(e);
+        } catch (InstantiationException e) {
+            logger.error("InstantiationException", e);
+            HPExceptionHandler.handleException(e);
+        } catch (IllegalAccessException e) {
+            logger.error("IllegalAccessException", e);
             HPExceptionHandler.handleException(e);
         }
     }

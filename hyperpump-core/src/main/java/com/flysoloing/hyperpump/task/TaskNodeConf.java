@@ -12,7 +12,8 @@ public class TaskNodeConf {
 
     private String taskName;
 
-    private Class<? extends Job> taskClass;
+//    private Class<? extends Job> taskClass;
+    private Class<?> taskClass;
 
     private String cron;
 
@@ -22,11 +23,11 @@ public class TaskNodeConf {
         this(taskName, null, "", "");
     }
 
-    public TaskNodeConf(String taskName, Class<? extends Job> taskClass, String cron) {
+    public TaskNodeConf(String taskName, Class<?> taskClass, String cron) {
         this(taskName, taskClass, cron, "");
     }
 
-    public TaskNodeConf(String taskName, Class<? extends Job> taskClass, String cron, String description) {
+    public TaskNodeConf(String taskName, Class<?> taskClass, String cron, String description) {
         this.taskName = taskName;
         this.taskClass = taskClass;
         this.cron = cron;
@@ -41,11 +42,11 @@ public class TaskNodeConf {
         this.taskName = taskName;
     }
 
-    public Class<? extends Job> getTaskClass() {
+    public Class<?> getTaskClass() {
         return taskClass;
     }
 
-    public void setTaskClass(Class<? extends Job> taskClass) {
+    public void setTaskClass(Class<?> taskClass) {
         this.taskClass = taskClass;
     }
 

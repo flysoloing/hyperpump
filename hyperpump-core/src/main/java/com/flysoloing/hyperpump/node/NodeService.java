@@ -1,4 +1,4 @@
-package com.flysoloing.hyperpump.base;
+package com.flysoloing.hyperpump.node;
 
 /**
  * 节点服务接口
@@ -12,6 +12,11 @@ public interface NodeService {
      * 初始化节点服务
      */
     void init();
+
+    /**
+     * 清除当前IP下所有不可用的节点
+     */
+    void clearDisabledNode();
 
     /**
      * 在注册中心注册节点信息

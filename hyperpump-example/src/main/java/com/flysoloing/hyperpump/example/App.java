@@ -1,6 +1,7 @@
 package com.flysoloing.hyperpump.example;
 
 import com.flysoloing.hyperpump.base.AbstractBaseTask;
+import com.flysoloing.hyperpump.example.task.SimpleOneOffTaskDemo;
 import com.flysoloing.hyperpump.executor.ExecutorNodeConf;
 import com.flysoloing.hyperpump.executor.ExecutorNodeService;
 import com.flysoloing.hyperpump.scheduler.SchedulerNodeConf;
@@ -21,7 +22,7 @@ public class App {
 
     private RegistryCenter registryCenter = new RegistryCenter(registryCenterConf);
 
-    private TaskNodeConf taskNodeConf01 = new TaskNodeConf("taskNodeConf01", AbstractBaseTask.class, "0/10 * * * * ?");
+    private TaskNodeConf taskNodeConf01 = new TaskNodeConf("taskNodeConf01", SimpleOneOffTaskDemo.class, "0/10 * * * * ?");
 
     private SchedulerNodeConf schedulerNodeConf01 = new SchedulerNodeConf("schedulerNodeConf01");
 

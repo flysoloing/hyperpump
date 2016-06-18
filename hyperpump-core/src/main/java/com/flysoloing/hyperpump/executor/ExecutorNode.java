@@ -1,6 +1,6 @@
 package com.flysoloing.hyperpump.executor;
 
-import com.flysoloing.hyperpump.base.Node;
+import com.flysoloing.hyperpump.node.Node;
 import com.flysoloing.hyperpump.common.Constants;
 import com.flysoloing.hyperpump.util.NodeUtils;
 import com.google.common.base.Joiner;

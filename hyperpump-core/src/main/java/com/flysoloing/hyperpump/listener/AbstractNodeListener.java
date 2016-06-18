@@ -1,10 +1,13 @@
 package com.flysoloing.hyperpump.listener;
 
-import com.flysoloing.hyperpump.base.Node;
+import com.flysoloing.hyperpump.node.Node;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.apache.curator.framework.recipes.cache.TreeCacheListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 节点监听器抽象类
@@ -13,6 +16,8 @@ import org.apache.curator.framework.recipes.cache.TreeCacheListener;
  * @since 2016-05-23 00:56:07
  */
 public abstract class AbstractNodeListener<T extends Node> implements TreeCacheListener {
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractNodeListener.class);
 
     private RegistryCenter registryCenter;
 
@@ -25,7 +30,8 @@ public abstract class AbstractNodeListener<T extends Node> implements TreeCacheL
 
     public void childEvent(CuratorFramework client, TreeCacheEvent event) throws Exception {
         String path = null == event.getData() ? "" : event.getData().getPath();
-        if (path.isEmpty()) {
+        if (StringUtils.isBlank(path)) {
+            logger.info("the event path is blank, do nothing return.");
             return;
         }
         dataChanged(registryCenter, node, event, path);

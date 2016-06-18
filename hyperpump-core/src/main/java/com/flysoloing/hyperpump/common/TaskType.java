@@ -13,13 +13,25 @@ public enum TaskType {
      */
     SIMPLE("simple"),
     /**
-     * 其他
+     * 批量数据任务类型
      */
-    OTHER("other");
+    BATCH("batch"),
+    /**
+     * 顺序批量数据任务类型
+     */
+    SEQUENCEBATCH("sequenceBatch");
 
     private String type;
 
     TaskType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
         this.type = type;
     }
 }
