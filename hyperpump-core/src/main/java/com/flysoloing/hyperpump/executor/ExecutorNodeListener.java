@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  */
 public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExecutorNodeService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExecutorNodeListener.class);
 
     public ExecutorNodeListener(RegistryCenter registryCenter, ExecutorNode executorNode) {
         super(registryCenter, executorNode);
