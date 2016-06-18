@@ -38,9 +38,9 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
         TreeCacheEvent.Type type = event.getType();
         if (data != null) {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
-            logger.info("The executor node listener - '{}' received event, type = {}, path = {}, value = {}", executorNode.getRootNodePath(), type, path, value);
-
             String taskNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
+            String executorNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseExecutorNodeName(path);
+            logger.info("The executor node listener - '{}' received event, type = {}, path = {}, value = {}", executorNodeName, type, path, value);
 
             String regEx = "/EXECUTORS/EXECUTOR_.*/taskArea/TASK_.*/taskStatus";
             Pattern pattern = Pattern.compile(regEx);

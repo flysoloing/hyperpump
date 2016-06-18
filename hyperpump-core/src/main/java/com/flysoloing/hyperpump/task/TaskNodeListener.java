@@ -36,9 +36,8 @@ public class TaskNodeListener extends AbstractNodeListener<TaskNode> {
         TreeCacheEvent.Type type = event.getType();
         if (data != null) {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
-            logger.info("The task node listener - '{}' received event, type = {}, path = {}, value = {}", taskNode.getRootNodePath(), type, path, value);
-
             String taskNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
+            logger.info("The task node listener - '{}' received event, type = {}, path = {}, value = {}", taskNodeName, type, path, value);
 
             //条件：type = NODE_UPDATED, path = /TASKS/TASK_${taskName}/taskStatus, value = running
             if (path.equals(taskNode.getTaskStatusNodePath()) && type == TreeCacheEvent.Type.NODE_UPDATED && value.equals(TaskStatus.RUNNING.getStatus())) {

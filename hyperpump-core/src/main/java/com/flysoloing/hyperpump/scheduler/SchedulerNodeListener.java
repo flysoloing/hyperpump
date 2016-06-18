@@ -37,9 +37,9 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
         TreeCacheEvent.Type type = event.getType();
         if (data != null) {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
-            logger.info("The scheduler node listener - '{}' received event, type = {}, path = {}, value = {}", schedulerNode.getRootNodePath(), type, path, value);
-
             String taskNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
+            String schedulerNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseSchedulerNodeName(path);
+            logger.info("The scheduler node listener - '{}' received event, type = {}, path = {}, value = {}", schedulerNodeName, type, path, value);
 
             String regEx = "/SCHEDULERS/SCHEDULER_.*/taskQueue/TASK_.*/taskStatus";
             Pattern pattern = Pattern.compile(regEx);
