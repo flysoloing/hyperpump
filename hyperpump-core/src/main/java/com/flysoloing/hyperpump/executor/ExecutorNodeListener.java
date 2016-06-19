@@ -12,9 +12,11 @@ import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,12 +77,17 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
             logger.info("the task class is blank");
             return;
         }
+
         try {
             Class taskClass = Class.forName(taskClassName);
             logger.info("execute task class - '{}'", taskClass.getCanonicalName());
-            //TODO 通过反射方式执行，两种方式：类似Spring的ReflectUtils工具类和Guava的Reflection工具类
+            Method method = ReflectionUtils.findMethod(taskClass, "process");
+            //TODO 通过反射方式执行，两种方式：类似Spring的ReflectionUtils工具类和Guava的Reflection工具类
             Constructor constructor = taskClass.getConstructor();
             Object obj = constructor.newInstance();
+            obj = ReflectionUtils.invokeMethod(method, obj);
+            //执行成功后，更新当前任务区里的任务状态为已完成（completed）
+            registryCenter.update(executorNode.getTaskStatusNodePath(taskNodeName), TaskStatus.COMPLETED.getStatus());
         } catch (ClassNotFoundException e) {
             logger.error("ClassNotFoundException", e);
             HPExceptionHandler.handleException(e);

@@ -1,6 +1,5 @@
 package com.flysoloing.hyperpump.example;
 
-import com.flysoloing.hyperpump.base.AbstractBaseTask;
 import com.flysoloing.hyperpump.example.task.SimpleOneOffTaskDemo;
 import com.flysoloing.hyperpump.executor.ExecutorNodeConf;
 import com.flysoloing.hyperpump.executor.ExecutorNodeService;

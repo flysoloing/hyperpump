@@ -4,11 +4,11 @@ package com.flysoloing.hyperpump.base;
  * @author laitao
  * @since 2016-06-18 16:12:16
  */
-public abstract class AbstractSimpleOneOffTask implements OneOffTask {
+public abstract class AbstractSimpleOneOffTask extends AbstractOneOffTask {
 
-    public void execute() {
+    protected void executeTask() {
         process();
     }
 
-    protected abstract void process();
+    public abstract void process();
 }

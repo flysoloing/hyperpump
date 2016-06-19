@@ -54,9 +54,11 @@ public class RegistryCenter {
                 .sessionTimeoutMs(registryCenterConf.getSessionTimeoutMs())
                 .retryPolicy(new ExponentialBackoffRetry(registryCenterConf.getBaseSleepTimeMs(), registryCenterConf.getMaxRetries(), registryCenterConf.getMaxSleepMs()))
                 .namespace(registryCenterConf.getNamespace());
-        curatorFramework = builder.build();
 
+        //TODO 增加ACL控制
+        curatorFramework = builder.build();
         curatorFramework.start();
+
         try {
             curatorFramework.blockUntilConnected();
         } catch (InterruptedException e) {

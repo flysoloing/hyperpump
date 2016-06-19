@@ -12,7 +12,13 @@ public class SimpleOneOffTaskDemo extends AbstractSimpleOneOffTask {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleOneOffTaskDemo.class);
 
-    protected void process() {
+    public void process() {
         logger.info("start processing the task with task data");
+        try {
+            Thread.sleep(5000L);
+        } catch (InterruptedException e) {
+            logger.error("", e);
+        }
+        logger.info("end processing the task with task data");
     }
 }
