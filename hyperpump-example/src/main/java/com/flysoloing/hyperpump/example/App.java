@@ -1,6 +1,7 @@
 package com.flysoloing.hyperpump.example;
 
-import com.flysoloing.hyperpump.example.task.SimpleOneOffTaskDemo;
+import com.flysoloing.hyperpump.example.task.BatchRepetitiveTaskDemo;
+import com.flysoloing.hyperpump.example.task.SimpleRepetitiveTaskDemo;
 import com.flysoloing.hyperpump.executor.ExecutorNodeConf;
 import com.flysoloing.hyperpump.executor.ExecutorNodeService;
 import com.flysoloing.hyperpump.scheduler.SchedulerNodeConf;
@@ -21,7 +22,9 @@ public class App {
 
     private RegistryCenter registryCenter = new RegistryCenter(registryCenterConf);
 
-    private TaskNodeConf taskNodeConf01 = new TaskNodeConf("taskNodeConf01", SimpleOneOffTaskDemo.class, "0/10 * * * * ?");
+    private TaskNodeConf taskNodeConf01 = new TaskNodeConf("taskNodeConf01", SimpleRepetitiveTaskDemo.class, "0/10 * * * * ?");
+
+    private TaskNodeConf taskNodeConf02 = new TaskNodeConf("taskNodeConf02", BatchRepetitiveTaskDemo.class, "0/5 * * * * ?");
 
     private SchedulerNodeConf schedulerNodeConf01 = new SchedulerNodeConf("schedulerNodeConf01");
 
@@ -44,8 +47,10 @@ public class App {
 
         //初始化任务节点服务
         new TaskNodeService(registryCenter, taskNodeConf01).init();
+        new TaskNodeService(registryCenter, taskNodeConf02).init();
         //初始化任务节点调度器
         new TaskNodeScheduler(registryCenter, taskNodeConf01).init();
+        new TaskNodeScheduler(registryCenter, taskNodeConf02).init();
 
         //初始化调度器节点服务
         new SchedulerNodeService(registryCenter, schedulerNodeConf01).init();

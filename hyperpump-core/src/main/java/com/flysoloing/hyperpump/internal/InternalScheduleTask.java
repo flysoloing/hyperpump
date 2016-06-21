@@ -38,7 +38,7 @@ public class InternalScheduleTask implements Job {
         try {
             if (lock.acquire(DEFAULT_LOCK_ACQUIRE_TIME_MS, TimeUnit.MILLISECONDS)) {
                 try {
-                    logger.info("已获取锁");
+                    logger.debug("已获取锁");
                     String status = registryCenter.get(taskNode.getTaskStatusNodePath());
                     logger.info("当前TaskNode节点状态：{}", status);
                     if (status != null && status.equals(TaskStatus.READY.getStatus())) {
@@ -53,7 +53,7 @@ public class InternalScheduleTask implements Job {
                     }
                 } finally {
                     lock.release();
-                    logger.info("已释放锁");
+                    logger.debug("已释放锁");
                 }
             }
         } catch (Exception e) {

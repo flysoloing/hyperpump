@@ -42,7 +42,7 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
             String taskNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
             String executorNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseExecutorNodeName(path);
-            logger.info("The executor node listener - '{}' received event, type = {}, path = {}, value = {}", executorNodeName, type, path, value);
+            logger.debug("The executor node listener - '{}' received event, type = {}, path = {}, value = {}", executorNodeName, type, path, value);
 
             String regEx = "/EXECUTORS/EXECUTOR_.*/taskArea/TASK_.*/taskStatus";
             Pattern pattern = Pattern.compile(regEx);
@@ -81,13 +81,11 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
         try {
             Class taskClass = Class.forName(taskClassName);
             logger.info("execute task class - '{}'", taskClass.getCanonicalName());
-            Method method = ReflectionUtils.findMethod(taskClass, "process");
-            //TODO 通过反射方式执行，两种方式：类似Spring的ReflectionUtils工具类和Guava的Reflection工具类
+            Method method = ReflectionUtils.findMethod(taskClass, "execute");
+            //TODO 通过反射方式执行，两种方式：参考使用Spring的ReflectionUtils工具类和Guava的Reflection工具类
             Constructor constructor = taskClass.getConstructor();
             Object obj = constructor.newInstance();
-            obj = ReflectionUtils.invokeMethod(method, obj);
-            //执行成功后，更新当前任务区里的任务状态为已完成（completed）
-            registryCenter.update(executorNode.getTaskStatusNodePath(taskNodeName), TaskStatus.COMPLETED.getStatus());
+            ReflectionUtils.invokeMethod(method, obj);
         } catch (ClassNotFoundException e) {
             logger.error("ClassNotFoundException", e);
             HPExceptionHandler.handleException(e);
@@ -104,6 +102,8 @@ public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
             logger.error("IllegalAccessException", e);
             HPExceptionHandler.handleException(e);
         }
+        //执行成功后，更新当前任务区里的任务状态为已完成（completed）
+        registryCenter.update(executorNode.getTaskStatusNodePath(taskNodeName), TaskStatus.COMPLETED.getStatus());
     }
 
     /**

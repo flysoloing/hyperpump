@@ -7,6 +7,7 @@ import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import com.flysoloing.hyperpump.task.TaskNode;
 import com.flysoloing.hyperpump.util.NodeUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -39,7 +40,7 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
             String taskNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
             String schedulerNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseSchedulerNodeName(path);
-            logger.info("The scheduler node listener - '{}' received event, type = {}, path = {}, value = {}", schedulerNodeName, type, path, value);
+            logger.debug("The scheduler node listener - '{}' received event, type = {}, path = {}, value = {}", schedulerNodeName, type, path, value);
 
             String regEx = "/SCHEDULERS/SCHEDULER_.*/taskQueue/TASK_.*/taskStatus";
             Pattern pattern = Pattern.compile(regEx);
@@ -80,7 +81,7 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
             return;
         }
 
-        String executorNodeName = children.get(0);
+        String executorNodeName = children.get(RandomUtils.nextInt(0, (children.size()-1)));
         ExecutorNode executorNode = NodeUtils.restoreExecutorNode(executorNodeName);
 
         //尝试获取锁后再执行，避免并发情况下竞争

@@ -6,6 +6,7 @@ import com.flysoloing.hyperpump.listener.AbstractNodeListener;
 import com.flysoloing.hyperpump.registry.RegistryCenter;
 import com.flysoloing.hyperpump.scheduler.SchedulerNode;
 import com.flysoloing.hyperpump.util.NodeUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -37,7 +38,7 @@ public class TaskNodeListener extends AbstractNodeListener<TaskNode> {
         if (data != null) {
             String value = new String(data.getData(), Charset.forName(Constants.CHARSET_NAME_UTF8));
             String taskNodeName = StringUtils.isBlank(path) ? "" : NodeUtils.parseTaskNodeName(path);
-            logger.info("The task node listener - '{}' received event, type = {}, path = {}, value = {}", taskNodeName, type, path, value);
+            logger.debug("The task node listener - '{}' received event, type = {}, path = {}, value = {}", taskNodeName, type, path, value);
 
             //条件：type = NODE_UPDATED, path = /TASKS/TASK_${taskName}/taskStatus, value = running
             if (path.equals(taskNode.getTaskStatusNodePath()) && type == TreeCacheEvent.Type.NODE_UPDATED && value.equals(TaskStatus.RUNNING.getStatus())) {
@@ -73,7 +74,7 @@ public class TaskNodeListener extends AbstractNodeListener<TaskNode> {
         }
 
         //根据特定策略选择一个SchedulerNode
-        String schedulerNodeName = children.get(0);
+        String schedulerNodeName = children.get(RandomUtils.nextInt(0, (children.size()-1)));
         SchedulerNode schedulerNode = NodeUtils.restoreSchedulerNode(schedulerNodeName);
 
         //尝试获取这个SchedulerNode的锁，并执行往其taskList节点增加新任务，采取事务的方式创建
