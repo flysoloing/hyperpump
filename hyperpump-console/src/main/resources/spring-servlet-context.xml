@@ -11,7 +11,7 @@
     <aop:aspectj-autoproxy/>
 
     <!-- web application context 扫描路径 -->
-    <context:component-scan base-package="com.jd.baoxian.channel"/>
+    <context:component-scan base-package="com.flysoloing.hyperpump.console"/>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -67,80 +67,12 @@
         <property name="basename" value="messages/messages"/>
     </bean>
 
-    <!-- passport -->
-    <bean id="springMvcInterceptor" class="com.jd.passport.inteceptor.mvc.SpringMvcInterceptor">
-        <property name="cookieName" value="${passport.checkLogin.cookieName}"/>
-        <property name="authenticationKey" value="${passport.checkLogin.authenticationKey}"/>
-        <property name="loginUrl" value="${passport.checkLogin.loginUrl}"/>
-        <property name="charsetName" value="${passport.checkLogin.charsetName}"/>
-        <property name="URIEncoding" value="${passport.checkLogin.uriEncoding}"/>
-        <!-- 集中式验证服务 -->
-        <property name="remoteServiceCaller" ref="remoteServiceCaller"/>
-        <property name="needParse" value="true"/>
-        <!--<property name="unLoginPaths">-->
-            <!--<set>-->
-                    <!--<value>/</value>-->
-                    <!--<value>/accident</value>-->
-                    <!--<value>/travel</value>-->
-                    <!--<value>/health</value>-->
-                    <!--<value>/item/**</value>-->
-            <!--</set>-->
-        <!--</property>-->
-    </bean>
-
-    <!--<saf:application name="${saf.app}" />-->
-    <!--<saf:registry id="userSessionRegister" protocol="${saf.registry.protocol}" address="${saf.registry.address}" />-->
-    <!--<saf:reference id="userSessionDubboRpcService"-->
-    <!--interface="com.jd.passport.session.dubbo.UserSessionDubboRpcService"-->
-    <!--group="loginSession" version="1.0" retries="1" timeout="100" protocol="dubbo" check="false"-->
-    <!--/>-->
-
-    <!-- session service -->
-    <bean id="remoteServiceCaller" class="com.jd.passport.remote.RemoteServiceCaller" init-method="init">
-        <property name="type" value="saf"/>
-        <!--<property name="userSessionDubboRpcService" ref="userSessionDubboRpcService"/>-->
-    </bean>
-
     <!-- 拦截器 -->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/order/**"/>
-            <ref bean="springMvcInterceptor"/>
-        </mvc:interceptor>
-        
-         <mvc:interceptor>
-            <mvc:mapping path="/phone/**"/>
-            <ref bean="springMvcInterceptor"/>
-        </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/bindPhone/**"/>
-            <ref bean="springMvcInterceptor"/>
-        </mvc:interceptor>
- 		<mvc:interceptor>
-            <mvc:mapping path="/vehicle/trade"/>
-            <ref bean="springMvcInterceptor"/>
-        </mvc:interceptor>
-
-        <mvc:interceptor>
-            <mvc:mapping path="/trade/**"/>
-            <ref bean="springMvcInterceptor"/>
-        </mvc:interceptor>
-
-        <mvc:interceptor>
-            <mvc:mapping path="/download/**"/>
-            <ref bean="springMvcInterceptor"/>
-        </mvc:interceptor>
-
-
-        <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <ref bean="whiteListInterceptor"/>
-        </mvc:interceptor>
-
-<!--        <mvc:interceptor>
-            <mvc:mapping path="/trade/buy"/>
-            <ref bean="refererInterceptor"/>
-        </mvc:interceptor>-->
-    </mvc:interceptors>
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/order/**"/>-->
+            <!--<ref bean="springMvcInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
 </beans>

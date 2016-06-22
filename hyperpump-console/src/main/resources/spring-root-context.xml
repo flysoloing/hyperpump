@@ -5,14 +5,13 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
-       default-autowire="byName">
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <aop:aspectj-autoproxy />
+    <aop:aspectj-autoproxy/>
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.jd.baoxian.channel"/>
+    <context:component-scan base-package="com.flysoloing.hyperpump.console"/>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -22,20 +21,4 @@
         </property>
     </bean>
 
-
-    <bean id="umpAspect" class="com.jd.payment.paycommon.metrics.UmpAspect">
-        <property name="umpKeyHead" value="baoxian_channel."/>
-    </bean>
-
-    <bean class="com.jd.ump.annotation.JAnnotation">
-        <!-- 初始化系统的心跳 key-->
-        <property name="systemKey" value="baoxian_channel.heartbeat.monitor"/>
-        <!-- 初始化系统的jvm监控 key-->
-        <property name="jvmKey" value="baoxian_channel.jvm.monitor"/>
-    </bean>
-
-    <bean class="com.jd.header.HeaderServer" init-method="start" destroy-method="stop"></bean>
-
-    <import resource="classpath:spring/spring-baoxian-channel-*.xml"/>
-    <import resource="classpath:spring/data/*.xml" />
 </beans>
