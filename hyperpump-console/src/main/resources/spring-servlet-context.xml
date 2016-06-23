@@ -54,12 +54,12 @@
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="/error"/>
         <property name="exceptionAttribute" value="ex"/>
-        <property name="exceptionMappings">
-            <props>
-                <prop key="Exception">error</prop>
-                <prop key="com.jd.baoxian.channel.common.exception.AppRuntimeException">error</prop>
-            </props>
-        </property>
+        <!--<property name="exceptionMappings">-->
+            <!--<props>-->
+                <!--<prop key="Exception">error</prop>-->
+                <!--<prop key="com.jd.baoxian.channel.common.exception.AppRuntimeException">error</prop>-->
+            <!--</props>-->
+        <!--</property>-->
     </bean>
 
     <!-- 国际化资源 -->
