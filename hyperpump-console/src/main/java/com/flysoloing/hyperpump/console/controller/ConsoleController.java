@@ -31,7 +31,7 @@ import java.util.Map;
  * @since 2016-06-22 17:27:29
  */
 @Controller
-public class ConsoleController extends WebApplicationObjectSupport {
+public class ConsoleController extends ViewResolverSupport {
 
     private static Logger logger = LoggerFactory.getLogger(ConsoleController.class);
 
@@ -50,7 +50,7 @@ public class ConsoleController extends WebApplicationObjectSupport {
         Template template = velocityEngine.getTemplate("index.vm");
         StringWriter stringWriter = new StringWriter();
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("test", "embed velocity engine render");
+        model.put("test", "embed velocity engine render测试");
         Context velocityContext = new VelocityContext(model);
         template.merge(velocityContext, stringWriter);
         String result = stringWriter.toString();
@@ -72,21 +72,50 @@ public class ConsoleController extends WebApplicationObjectSupport {
         WebApplicationContext webApplicationContext = getWebApplicationContext();
         VelocityLayoutViewResolver velocityLayoutViewResolver = (VelocityLayoutViewResolver)webApplicationContext.getBean("velocityLayoutViewResolver");
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("test", "embed velocity engine render222222222");
+        model.put("test", "embed velocity engine render222222222测试");
         try {
             VelocityLayoutView velocityLayoutView = (VelocityLayoutView)velocityLayoutViewResolver.resolveViewName("index", new Locale("en"));
             velocityLayoutView.render(model, request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        PrintWriter stringWriter;
+        PrintWriter stringWriter = null;
         try {
             stringWriter = response.getWriter();
             return stringWriter.toString();//TODO
         } catch (IOException e) {
             e.printStackTrace();
             return "9999999";
+        } finally {
+            if (stringWriter != null)
+                stringWriter.close();
         }
 
+    }
+
+    @RequestMapping(value = "/renderTest3", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, String> renderTest3(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("test", "embed velocity engine render3333333333333测试");
+        String velocityConfigurerName = "velocityConfigurer";
+        String name = "index.vm";
+        Map<String, String> map = new HashMap<String, String>();
+        String result = render(velocityConfigurerName, name, model, request, response);
+        map.put("result", result);
+        return map;
+    }
+
+    @RequestMapping(value = "/navTest", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, String> navTest(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("test", "navTest|embed velocity engine render3333333333333测试");
+        String velocityConfigurerName = "velocityConfigurer";
+        String name = "test.vm";
+        Map<String, String> map = new HashMap<String, String>();
+        String result = render(velocityConfigurerName, name, model, request, response);
+        map.put("result", result);
+        return map;
     }
 }

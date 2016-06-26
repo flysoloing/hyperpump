@@ -1,1 +1,25 @@
-$screen_content
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    #parse("/common/head.vm")
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    #parse("/common/nav.vm")
+
+    $screen_content
+
+</div>
+<!-- /#wrapper -->
+
+    #parse("/common/script.vm")
+
+</body>
+
+</html>
