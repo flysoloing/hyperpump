@@ -13,7 +13,7 @@ function showPageContent() {
         dataType: "json",
         scriptCharset: "utf-8",
         success: function(result) {
-            $("#page-wrapper").html(result.result);
+            $("#page-wrapper").replaceWith(result.result);
         },
         error: function(xhr, status, errorThrown) {
             console.log("Error: " + errorThrown);
