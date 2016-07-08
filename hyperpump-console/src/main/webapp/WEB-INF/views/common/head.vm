@@ -4,7 +4,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Bootstrap Admin Theme|$test</title>
+<title>XXX控制台|$test</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="/statics/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +17,9 @@
 
 <!-- Custom CSS -->
 <link href="/statics/css/sb-admin-2.css" rel="stylesheet">
+
+<!-- Bootstrap Social CSS -->
+<link href="/statics/css/bootstrap-social.css" rel="stylesheet">
 
 <!-- Morris Charts CSS -->
 <link href="/statics/css/morris.css" rel="stylesheet">

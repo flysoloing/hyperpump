@@ -1,12 +1,22 @@
 /**
  * Created by Administrator on 2016/6/26.
  */
-$("#navTest").click(function() {
-    showPageContent("/navTest");
+//$("#navTest").click(function() {
+//    showPageContent("navTest");
+//});
+
+$("li a").click(function() {
+    var path = $(this).attr("id");
+    if(path == undefined || path == "" || path == null) {
+        return;
+    }
+//    $(this).siblings(".active").removeClass("active");
+//    $(this).addClass("active");
+    showPageContent(path);
 });
 
-function showPageContent() {
-    var loadUrl = "/navTest?temp="+new Date().getTime();
+function showPageContent(path) {
+    var loadUrl = "/" + path + "?temp="+new Date().getTime();
     $.ajax({
         url: loadUrl,
         type: "GET",

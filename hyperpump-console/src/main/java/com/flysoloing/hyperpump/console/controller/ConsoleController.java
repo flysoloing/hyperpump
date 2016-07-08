@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -112,7 +113,21 @@ public class ConsoleController extends ViewResolverSupport {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("test", "navTest|embed velocity engine render3333333333333测试");
         String velocityConfigurerName = "velocityConfigurer";
-        String name = "test.vm";
+        String name = "taskNodeList.vm";
+        Map<String, String> map = new HashMap<String, String>();
+        String result = render(velocityConfigurerName, name, model, request, response);
+        map.put("result", result);
+        return map;
+    }
+
+    @RequestMapping(value = "/namespace/{namespace}", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, String> namespace(@PathVariable String namespace, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("test", "navTest|embed velocity engine render3333333333333测试");
+        model.put("namespace", namespace);
+        String velocityConfigurerName = "velocityConfigurer";
+        String name = "namespace.vm";
         Map<String, String> map = new HashMap<String, String>();
         String result = render(velocityConfigurerName, name, model, request, response);
         map.put("result", result);
