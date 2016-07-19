@@ -97,6 +97,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.flysoloing.common</groupId>
+            <artifactId>flysoloing-common</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

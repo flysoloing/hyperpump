@@ -124,6 +124,7 @@
                 <version>5.2.4.Final</version>
             </dependency>
 
+            <!-- new apache commons jar -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
@@ -135,6 +136,7 @@
                 <version>3.2</version>
             </dependency>
 
+            <!-- old apache commons jar -->
             <dependency>
                 <groupId>commons-digester</groupId>
                 <artifactId>commons-digester</artifactId>
@@ -243,8 +245,37 @@
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectj.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.flysoloing.common</groupId>
+                <artifactId>flysoloing-common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>com.flysoloing.plugins.ghrepo</groupId>-->
+                <!--<artifactId>ghrepo-maven-plugin</artifactId>-->
+                <!--<version>1.0-SNAPSHOT</version>-->
+                <!--<configuration>-->
+                    <!--<localGhRepoLibsPath>D:\DevEnv\repo\libs</localGhRepoLibsPath>-->
+                    <!--<localGhRepoPluginsPath>D:\DevEnv\repo\plugins</localGhRepoPluginsPath>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>flush</id>-->
+                        <!--<phase>install</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>sync-ghrepo</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
 
     <modules>
         <module>hyperpump-console</module>
