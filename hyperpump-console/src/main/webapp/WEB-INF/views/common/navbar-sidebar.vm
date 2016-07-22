@@ -34,7 +34,7 @@
                 <a href="#"><i class="fa fa-wrench fa-fw"></i> 命名空间管理<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a id="namespace/add" href="javascript:void(0);">新增命名空间</a>
+                        <a id="configure/add" href="javascript:void(0);">新增命名空间</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

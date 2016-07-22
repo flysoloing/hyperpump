@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flysoloing.hyperpump.console.dao.ZKMapper" >
+  <resultMap id="BaseResultMap" type="com.flysoloing.hyperpump.console.domain.ZK" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+    <result column="connectStr" property="connectStr" jdbcType="VARCHAR" />
+    <result column="sessionTimeout" property="sessionTimeout" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, des, connectStr, sessionTimeout
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from zk
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from zk
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.flysoloing.hyperpump.console.domain.ZK" >
+    insert into zk (id, des, connectStr, sessionTimeout)
+    values (#{id,jdbcType=VARCHAR},
+      #{des,jdbcType=VARCHAR},
+      #{connectStr,jdbcType=VARCHAR},
+      #{sessionTimeout,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.flysoloing.hyperpump.console.domain.ZK" >
+    update zk
+    set des = #{des,jdbcType=VARCHAR},
+      connectStr = #{connectStr,jdbcType=VARCHAR},
+      sessionTimeout = #{sessionTimeout,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from zk
+    </select>
+    
+</mapper>

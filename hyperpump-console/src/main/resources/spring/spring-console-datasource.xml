@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <!-- common datasource setting -->
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
+        <!--<property name="driverClassName" value="${jdbc.driverClassName}" />-->
+        <!--<property name="url" value="${datasource.url}" />-->
+        <!--<property name="username" value="${datasource.username}" />-->
+        <!--<property name="password" value="${datasource.password}" />-->
+        <!--<property name="maxActive" value="20" />-->
+        <!--<property name="maxIdle" value="10" />-->
+        <!--<property name="minIdle" value="5" />-->
+        <!--<property name="initialSize" value="3" />-->
+        <!--<property name="maxWait" value="15000" />-->
+        <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+        <!--<property name="minEvictableIdleTimeMillis" value="180000" />-->
+    <!--</bean>-->
+
+    <!-- h2 datasource setting -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="org.h2.Driver" />
+        <!-- jdbc:h2:mem:WebMagic;DB_CLOSE_DELAY=-1 -->
+        <property name="url" value="jdbc:h2:file:~/.h2/console" />
+        <property name="username" value="sa" />
+        <property name="password" value="sa" />
+        <property name="maxActive" value="20" />
+        <property name="maxIdle" value="10" />
+        <property name="minIdle" value="5" />
+        <property name="initialSize" value="3" />
+        <property name="maxWait" value="15000" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="180000" />
+    </bean>
+    <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+        <jdbc:script location="classpath:sql/h2-console-schema.sql" encoding="UTF-8"/>
+        <!--<jdbc:script location="classpath:data/h2/import-data.sql" encoding="UTF-8"/>-->
+    </jdbc:initialize-database>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.flysoloing.hyperpump.console.domain"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:sqlmap/*Mapper.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="commonMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.flysoloing.hyperpump.console.dao"/>
+    </bean>
+
+</beans>

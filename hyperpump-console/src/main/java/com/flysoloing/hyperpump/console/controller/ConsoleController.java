@@ -147,4 +147,23 @@ public class ConsoleController extends VelocityViewResolverSupport {
         map.put("result", result);
         return map;
     }
+
+    @RequestMapping(value = "/configure/{namespace}", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, String> configure(@PathVariable String namespace, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("test", "navTest|embed velocity engine render3333333333333测试");
+        model.put("namespace", namespace);
+        String velocityConfigurerName = "velocityConfigurer";
+        String name = "configure";
+        Map<String, String> map = new HashMap<String, String>();
+        String result = null;
+        try {
+            result = render(velocityConfigurerName, name, model, request, response);
+        } catch (Exception e) {
+            logger.error("", e);
+        }
+        map.put("result", result);
+        return map;
+    }
 }
