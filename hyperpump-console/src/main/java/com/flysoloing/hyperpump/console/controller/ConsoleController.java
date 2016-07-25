@@ -1,12 +1,15 @@
 package com.flysoloing.hyperpump.console.controller;
 
 import com.flysoloing.common.extention.VelocityViewResolverSupport;
+import com.flysoloing.hyperpump.console.domain.ZK;
+import com.flysoloing.hyperpump.console.service.ZKService;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -35,9 +39,14 @@ public class ConsoleController extends VelocityViewResolverSupport {
 
     private static Logger logger = LoggerFactory.getLogger(ConsoleController.class);
 
+    @Autowired
+    private ZKService zkService;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         logger.info("访问首页");
+        List<ZK> zkList = zkService.selectAll();
+        logger.info("The zk namespace size is {}", zkList.size());
         return "index";
     }
 

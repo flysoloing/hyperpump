@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <!-- common datasource setting -->
-    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
         <!--<property name="driverClassName" value="${jdbc.driverClassName}" />-->
         <!--<property name="url" value="${datasource.url}" />-->
         <!--<property name="username" value="${datasource.username}" />-->
@@ -21,7 +21,7 @@
     <!--</bean>-->
 
     <!-- h2 datasource setting -->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.h2.Driver" />
         <!-- jdbc:h2:mem:WebMagic;DB_CLOSE_DELAY=-1 -->
         <property name="url" value="jdbc:h2:file:~/.h2/console" />
