@@ -47,8 +47,10 @@ public class SchedulerNodeService implements NodeService {
             registryCenter.persist(schedulerNode.getDescriptionNodePath(), schedulerNodeConf.getDescription());
             registryCenter.persist(schedulerNode.getQueueCapacityNodePath(), String.valueOf(schedulerNodeConf.getQueueCapacity()));
             registryCenter.persist(schedulerNode.getTaskQueueNodePath(), "");
-            registryCenter.persist(schedulerNode.getNodeStatusNodePath(), NodeStatus.NORMAL.getStatus());
+            registryCenter.persist(schedulerNode.getNodeStatusNodePath(), NodeStatus.ENABLED.getStatus());
+            return;
         }
+        logger.info("");
     }
 
     public void registerNodeListener() {
@@ -58,6 +60,6 @@ public class SchedulerNodeService implements NodeService {
     }
 
     public void registerConnListener() {
-        //TODO
+        //TODO 注册对节点连接状态的监听器，当丢失连接的时候，将节点的状态改为disable状态
     }
 }

@@ -9,9 +9,13 @@ package com.flysoloing.hyperpump.common;
 public enum NodeStatus {
 
     /**
-     * 正常
+     * 可用
      */
-    NORMAL("normal"),
+    ENABLED("enabled"),
+    /**
+     * 阻塞
+     */
+    BLOCKED("blocked"),
     /**
      * 不可用
      */

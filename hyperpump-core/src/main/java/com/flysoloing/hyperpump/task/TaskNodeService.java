@@ -49,8 +49,10 @@ public class TaskNodeService implements NodeService {
             registryCenter.persist(taskNode.getTaskTypeNodePath(), "");
             registryCenter.persist(taskNode.getBatchNoNodePath(), NodeUtils.incrBatchNo(0L));  //格式化，如：0000000000000000001
             registryCenter.persist(taskNode.getTaskStatusNodePath(), TaskStatus.READY.getStatus());
-            registryCenter.persist(taskNode.getNodeStatusNodePath(), NodeStatus.NORMAL.getStatus());
+            registryCenter.persist(taskNode.getNodeStatusNodePath(), NodeStatus.BLOCKED.getStatus());  //默认初始化为阻塞状态，统一通过控制台去开启
+            return;
         }
+        logger.info("");
     }
 
     public void registerNodeListener() {

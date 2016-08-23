@@ -60,7 +60,7 @@ public class SchedulerNodeListener extends AbstractNodeListener<SchedulerNode> {
     }
 
     /**
-     * 将调度器节点持有的任务分发给执行器节点，可以根据不同的策略选择一个多多个执行器节点
+     * 将调度器节点持有的任务分发给执行器节点，可以根据不同的策略选择一个或多个执行器节点
      *
      * @param registryCenter 注册中心
      * @param schedulerNode 调度器节点

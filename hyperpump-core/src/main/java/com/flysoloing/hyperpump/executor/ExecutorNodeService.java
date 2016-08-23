@@ -46,8 +46,10 @@ public class ExecutorNodeService implements NodeService {
             registryCenter.persist(executorNode.getObjNameNodePath(), executorNodeConf.getObjName());
             registryCenter.persist(executorNode.getDescriptionNodePath(), executorNodeConf.getDescription());
             registryCenter.persist(executorNode.getTaskAreaNodePath(), "");
-            registryCenter.persist(executorNode.getNodeStatusNodePath(), NodeStatus.NORMAL.getStatus());
+            registryCenter.persist(executorNode.getNodeStatusNodePath(), NodeStatus.ENABLED.getStatus());
+            return;
         }
+        logger.info("");
     }
 
     public void registerNodeListener() {
