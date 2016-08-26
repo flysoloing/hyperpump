@@ -245,6 +245,10 @@ public class RegistryCenter {
         }
     }
 
+    public void registerConnStateListener() {
+
+    }
+
     public RegistryCenterConf getRegistryCenterConf() {
         return registryCenterConf;
     }
