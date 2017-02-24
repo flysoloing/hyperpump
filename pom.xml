@@ -213,6 +213,13 @@
                 <version>1.5.1</version>
             </dependency>
 
+            <!-- other common jar -->
+            <dependency>
+                <groupId>com.facebook.jcommon</groupId>
+                <artifactId>util</artifactId>
+                <version>0.1.29</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>
