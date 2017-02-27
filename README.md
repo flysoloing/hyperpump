@@ -11,7 +11,26 @@ HyperPump具有强大的任务处理能力，是一个分布式的、多中心�
 
 当前正式版本为1.0.0，发布于2017年2月24日
 
-为了使用HyperPump，需要在Maven的`pom.xml`文件中添加如下依赖项
+由于核心jar包并未加入到Maven的核心仓库，为了使用HyperPump，首先需要进行私有库的设置
+
+```xml
+<!-- private remote libs repository -->
+<repositories>
+    <repository>
+        <id>flysoloing-maven-libs-repo</id>
+        <name>FlySoloing Maven Libs Repository</name>
+        <url>http://flysoloing.github.io/repo/libs</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+```
+
+然后在Maven的`pom.xml`文件中添加`hyperpump-core`依赖项
 
 ```xml
 <dependency>
@@ -29,11 +48,11 @@ HyperPump具有强大的任务处理能力，是一个分布式的、多中心�
 
 ## 快速开始
 
-1. 配置zookeeper环境
+1. 首先下载[zookeeper安装包][zookeeper安装包]，然后配置zookeeper环境并启动，具体如何配置可以参考[这篇文章][zookeeper配置]
 
-2. 下载hyperpump-example示例
+2. 下载[hyperpump-example][hyperpump-example]示例，下载hyperpump-console控制台
 
-3. 运行示例
+3. 运行hyperpump-example示例，然后运行hyperpump-console，监控任务调度和执行情况
 
 ## 参考及定义
 
@@ -44,3 +63,6 @@ HyperPump具有强大的任务处理能力，是一个分布式的、多中心�
 
 [1.0-REALEASE-version]: https://xx.com
 [1.0-SNAPSHOT-version]: https://xx.com
+[zookeeper安装包]: http://www.apache.org/dyn/closer.cgi/zookeeper/
+[zookeeper配置]: http://coolxing.iteye.com/blog/1871009
+[hyperpump-example]: https://github.com/flysoloing/repo/blob/gh-pages/libs/com/flysoloing/common/flysoloing-common/1.0-SNAPSHOT/flysoloing-common-1.0-SNAPSHOT.jar

@@ -18,7 +18,7 @@ import com.flysoloing.hyperpump.registry.RegistryCenterConf;
  */
 public class App {
 
-    private RegistryCenterConf registryCenterConf = new RegistryCenterConf("localhost:4181", "hyperpump", 1000, 3, 3000);
+    private RegistryCenterConf registryCenterConf = new RegistryCenterConf("localhost:2181", "hyperpump", 1000, 3, 3000);
 
     private RegistryCenter registryCenter = new RegistryCenter(registryCenterConf);
 
@@ -40,7 +40,7 @@ public class App {
         new App().init();
     }
 
-    public void init() {
+    private void init() {
         //初始化注册中心
         registryCenter.init();
         taskNodeConf01.setDescription("this is my first test");
