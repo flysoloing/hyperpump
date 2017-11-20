@@ -11,7 +11,7 @@
     <artifactId>hyperpump-core</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>hyperpump-core</name>
-    <url>https://github.com/flysoloing/hyperpump</url>
+    <url>https://github.com/flysoloing/hyperpump/tree/master/hyperpump-core</url>
 
     <dependencies>
         <dependency>

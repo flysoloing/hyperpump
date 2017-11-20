@@ -1,6 +1,6 @@
 package com.flysoloing.hyperpump.console.controller;
 
-import com.flysoloing.common.extention.VelocityViewResolverSupport;
+import com.flysoloing.commons.enhancement.VelocityViewResolverSupport;
 import com.flysoloing.hyperpump.console.domain.ZK;
 import com.flysoloing.hyperpump.console.service.ZKService;
 import org.apache.velocity.Template;
@@ -96,8 +96,9 @@ public class ConsoleController extends VelocityViewResolverSupport {
             e.printStackTrace();
             return "9999999";
         } finally {
-            if (stringWriter != null)
+            if (stringWriter != null) {
                 stringWriter.close();
+            }
         }
 
     }
