@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author laitao
- * @since 2016-06-18 16:53:46
+ * @date 2016-06-18 16:53:46
  */
 public class SimpleRepetitiveTaskDemo extends AbstractSimpleRepetitiveTask {
 

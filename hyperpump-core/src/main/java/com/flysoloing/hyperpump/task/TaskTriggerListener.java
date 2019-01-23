@@ -4,7 +4,7 @@ import org.quartz.listeners.TriggerListenerSupport;
 
 /**
  * @author laitao
- * @since 2016-05-19 00:42:45
+ * @date 2016-05-19 00:42:45
  */
 public class TaskTriggerListener extends TriggerListenerSupport {
 

@@ -2,7 +2,7 @@ package com.flysoloing.hyperpump.example.task;
 
 /**
  * @author laitao
- * @since 2016-06-21 17:42:27
+ * @date 2016-06-21 17:42:27
  */
 public class Fish {
 

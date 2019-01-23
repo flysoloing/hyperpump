@@ -2,7 +2,7 @@ package com.flysoloing.hyperpump.common;
 
 /**
  * @author laitao
- * @since 2016-06-18 15:49:06
+ * @date 2016-06-18 15:49:06
  */
 public enum TaskCategory {
 

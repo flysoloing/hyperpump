@@ -22,7 +22,7 @@ import java.util.Map;
  * 注册中心，基于zookeeper实现
  *
  * @author laitao
- * @since 2016-05-13 01:05:25
+ * @date 2016-05-13 01:05:25
  */
 public class RegistryCenter {
 

@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
  * 批量任务
  *
  * @author laitao
- * @since 2016-06-18 16:10:48
+ * @date 2016-06-18 16:10:48
  */
 public abstract class AbstractBatchTask<T> implements HyperPumpTask {
 

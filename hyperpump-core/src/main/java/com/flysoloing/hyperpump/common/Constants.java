@@ -4,7 +4,7 @@ package com.flysoloing.hyperpump.common;
  * 常量类
  *
  * @author laitao
- * @since 2016-05-20 16:48:41
+ * @date 2016-05-20 16:48:41
  */
 public class Constants {
 

@@ -9,7 +9,7 @@ import com.google.common.base.Joiner;
  * 调度器节点
  *
  * @author laitao
- * @since 2016-05-13 01:01:20
+ * @date 2016-05-13 01:01:20
  */
 public class SchedulerNode implements Node {
 

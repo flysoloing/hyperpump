@@ -4,7 +4,7 @@ package com.flysoloing.hyperpump.common;
  * 任务类型枚举
  *
  * @author laitao
- * @since 2016-06-15 01:35:00
+ * @date 2016-06-15 01:35:00
  */
 public enum TaskType {
 

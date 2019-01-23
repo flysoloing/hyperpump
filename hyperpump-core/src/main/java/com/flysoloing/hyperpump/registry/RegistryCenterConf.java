@@ -4,7 +4,7 @@ package com.flysoloing.hyperpump.registry;
  * 注册中心配置，基于zookeeper实现
  *
  * @author laitao
- * @since 2016-05-13 01:03:29
+ * @date 2016-05-13 01:03:29
  */
 public class RegistryCenterConf {
 

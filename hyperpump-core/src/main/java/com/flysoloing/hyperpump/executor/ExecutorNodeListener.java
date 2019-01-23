@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * 执行器节点监听器
  *
  * @author laitao
- * @since 2016-05-26 01:41:36
+ * @date 2016-05-26 01:41:36
  */
 public class ExecutorNodeListener extends AbstractNodeListener<ExecutorNode> {
 

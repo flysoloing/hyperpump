@@ -8,7 +8,7 @@ import org.apache.curator.framework.state.ConnectionStateListener;
  * 连接状态监听器抽象类
  *
  * @author laitao
- * @since 2016-05-31 18:56:22
+ * @date 2016-05-31 18:56:22
  */
 public abstract class AbstractConnListener implements ConnectionStateListener {
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @author laitao
- * @since 2016-06-21 17:43:02
+ * @date 2016-06-21 17:43:02
  */
 public class BatchRepetitiveTaskDemo extends AbstractBatchRepetitiveTask<Fish> {
 

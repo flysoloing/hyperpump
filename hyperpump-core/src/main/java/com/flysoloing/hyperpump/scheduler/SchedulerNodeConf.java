@@ -6,7 +6,7 @@ import com.flysoloing.hyperpump.util.LocalhostUtils;
  * 调度器节点配置
  *
  * @author laitao
- * @since 2016-05-19 01:10:43
+ * @date 2016-05-19 01:10:43
  */
 public class SchedulerNodeConf {
 

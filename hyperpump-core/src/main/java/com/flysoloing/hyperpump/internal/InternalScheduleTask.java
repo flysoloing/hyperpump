@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * 内部调度任务
  *
  * @author laitao
- * @since 2016-05-20 18:00:03
+ * @date 2016-05-20 18:00:03
  */
 public class InternalScheduleTask implements Job {
 
